@@ -65,7 +65,7 @@
             z-index: 1;
             background:
                 linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)),
-                url("IMG_2932.png") center/cover no-repeat;
+                url("https://codehs.com/uploads/65ad685b51e9eb1d65794b4ce70f72fa") center/cover no-repeat;
             transform: scale(1);
         }
 
@@ -926,47 +926,6 @@
             }
         }
 
-        .video-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.92);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(8px);
-}
-
-.video-container {
-  position: relative;
-  width: 80%;
-  max-width: 1000px;
-  transform: scale(0.9);
-  transition: 0.3s ease;
-}
-
-.video-overlay.active .video-container {
-  transform: scale(1);
-}
-
-.video-container iframe {
-  width: 100%;
-  height: 550px;
-  border-radius: 12px;
-}
-
-.close-video {
-  position: absolute;
-  top: -45px;
-  right: 0;
-  font-size: 40px;
-  color: white;
-  cursor: pointer;
-}
-
         .support-lead {
             max-width: 760px;
         }
@@ -1232,11 +1191,11 @@
                 <h2>EPISODES</h2>
 
                 <div class="featured-episode parallax-card" id="featuredEpisode">
-                    <div class="featured-thumb parallax-media" style="background-image: url('Alpha-Universe-Wyatt-Peterson-Cave-Photography-Sony-a7riii-3.webp');">
+                    <div class="featured-thumb parallax-media" style="background-image: url('https://codehs.com/uploads/5d1bedd01c9c479841cd341407fd2d52');">
                         <div class="featured-badge">LATEST FEATURE</div>
                         <div class="thumb-shine"></div>
                         <div class="featured-hover-overlay">
-                            <button class="watch-btn" onclick="openVideo()">WATCH EPISODE</button>
+                            <div class="featured-hover-pill">WATCH EPISODE</div>
                         </div>
                     </div>
 
@@ -1250,7 +1209,7 @@
                             </p>
 
                             <div class="featured-actions">
-                                <a href="https://youtu.be/L3rErvUCawY" class="featured-btn primary">Watch Now</a>
+                                <a href="#" class="featured-btn primary">Watch Now</a>
                             </div>
                         </div>
                     </div>
@@ -1258,7 +1217,7 @@
 
                 <div class="episodes-grid">
                     <div class="episode-card parallax-card" id="episode1-card">
-                        <div class="episode-thumb parallax-media" style="background-image: url('Alpha-Universe-Wyatt-Peterson-Cave-Photography-Sony-a7riii-3.webp');">
+                        <div class="episode-thumb parallax-media" style="background-image: url('https://codehs.com/uploads/5d1bedd01c9c479841cd341407fd2d52');">
                             <div class="thumb-shine"></div>
                             <div class="thumb-label">EPISODE PREVIEW</div>
                         </div>
@@ -1274,7 +1233,7 @@
                     </div>
 
                     <div class="episode-card parallax-card">
-                        <div class="episode-thumb parallax-media" style="background-image: url('hq720.jpg');">
+                        <div class="episode-thumb parallax-media" style="background-image: url('https://codehs.com/uploads/8d15a73c209dfe74ce32d29cb01fefd8');">
                             <div class="thumb-shine"></div>
                             <div class="thumb-label">EPISODE PREVIEW</div>
                         </div>
@@ -1501,31 +1460,6 @@
             revealSections();
         });
 
-        <script>
-const overlay = document.getElementById("videoOverlay");
-const frame = document.getElementById("videoFrame");
-
-function openVideo() {
-  overlay.style.display = "flex";
-  overlay.classList.add("active");
-  frame.src = "https://youtu.be/L3rErvUCawY";
-}
-
-function closeVideo() {
-  overlay.style.display = "none";
-  overlay.classList.remove("active");
-  frame.src = "";
-}
-
-// close when clicking X
-document.querySelector(".close-video").onclick = closeVideo;
-
-// optional: click outside to close
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay) closeVideo();
-});
-</script>
-
         const countdownBox = document.getElementById("homeCountdownBox");
         const episodesSection = document.getElementById("episodes");
         const episode1Card = document.getElementById("episode1-card");
@@ -1646,16 +1580,6 @@ overlay.addEventListener("click", (e) => {
             }
         });
     </script>
-<div id="videoOverlay" class="video-overlay">
-  <div class="video-container">
-    <span class="close-video">&times;</span>
-    <iframe id="videoFrame"
-      src=""
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
-  </div>
-</div>
+
 </body>
 </html>
