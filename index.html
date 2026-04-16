@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            background: #000;
+            cursor: none;
+        }
+        
+        body::after {
+            content: "";
+            display: block;
+            height: 300px;
+        }
+
+        a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card {
+            cursor: none;
+        }
+
+        body.page-loading .content {
+            opacity: 0;
+            transform: translateY(20px) scale(0.99);
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        .bg-container {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            overflow: hidden;
+        }
+
+        .bg-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.08s linear, transform 0.12s linear;
+            will-change: transform, opacity;
+        }
+
+        .bg1 {
+            opacity: 1;
+            z-index: 1;
+            background:
+                linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)),
+                url("https://codehs.com/uploads/65ad685b51e9eb1d65794b4ce70f72fa") center/cover no-repeat;
+            transform: scale(1);
+        }
+
+        .bg2 {
+            opacity: 0;
+            z-index: 2;
+            background: linear-gradient(
+                to bottom,
+                #160202 0%,
+                #240404 35%,
+                #180202 70%,
+                #0b0000 100%
+            );
+        }
+
+        .grain-overlay {
+            position: fixed;
+            inset: -50%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.075;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12) 0 1px, transparent 1px),
+                radial-gradient(circle at 80% 30%, rgba(255,255,255,0.09) 0 1px, transparent 1px),
+                radial-gradient(circle at 40% 70%, rgba(255,255,255,0.08) 0 1px, transparent 1px),
+                radial-gradient(circle at 70% 80%, rgba(255,255,255,0.07) 0 1px, transparent 1px);
+            background-size: 180px 180px, 220px 220px, 260px 260px, 200px 200px;
+            animation: grainShift 10s steps(8) infinite;
+            mix-blend-mode: soft-light;
+        }
+
+        @keyframes grainShift {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-1%, 1%); }
+            40% { transform: translate(1%, -1%); }
+            60% { transform: translate(-1%, 0.5%); }
+            80% { transform: translate(1%, 1%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .custom-cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(255, 55, 55, 0.98);
+            box-shadow:
+                0 0 10px rgba(255, 40, 40, 0.95),
+                0 0 24px rgba(255, 40, 40, 0.70),
+                0 0 44px rgba(255, 20, 20, 0.45);
+            transition: transform 0.18s ease, opacity 0.2s ease, box-shadow 0.18s ease;
+        }
+
+        body.cursor-visible .custom-cursor-dot {
+            opacity: 1;
+        }
+
+        body.cursor-hover .custom-cursor-dot {
+            transform: translate(-50%, -50%) scale(1.28);
+            box-shadow:
+                0 0 12px rgba(255, 70, 70, 1),
+                0 0 28px rgba(255, 50, 50, 0.82),
+                0 0 52px rgba(255, 25, 25, 0.58);
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            padding: 16px 40px;
+            background-color: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            z-index: 50;
+            transition:
+                background-color 0.3s ease,
+                backdrop-filter 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(18, 0, 0, 0.42);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 90, 90, 0.14);
+            box-shadow:
+                0 10px 28px rgba(0,0,0,0.22),
+                0 0 22px rgba(255, 50, 50, 0.08);
+        }
+
+        .logo {
+            position: absolute;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            position: relative;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            padding-bottom: 6px;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: none;
+        }
+
+        .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-indicator {
+            position: absolute;
+            bottom: 0;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255,70,70,0.95), rgba(255,110,110,0.9));
+            box-shadow: 0 0 10px rgba(255, 60, 60, 0.35);
+            left: 0;
+            width: 0;
+            transition: left 0.35s ease, width 0.35s ease;
+            pointer-events: none;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .hero-aura {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 520px;
+            height: 220px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle, rgba(255,45,45,0.10) 0%, rgba(255,35,35,0.05) 28%, rgba(255,20,20,0.02) 48%, rgba(255,0,0,0) 72%);
+            filter: blur(22px);
+            animation: heroAuraPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes heroAuraPulse {
+            0%, 100% {
+                opacity: 0.45;
+                transform: translate(-50%, -50%) scale(0.96);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .hero-inner {
+            will-change: transform, opacity;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            letter-spacing: 6px;
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            animation: heroBreath 4s ease-in-out infinite, titleGradientShift 14s linear infinite;
+            transform-origin: center;
+            background: linear-gradient(
+                135deg,
+                #ffffff 0%,
+                #ffe1e1 8%,
+                #ffbaba 16%,
+                #ff8f8f 24%,
+                #ff6666 32%,
+                #ff2f2f 40%,
+                #ff5a5a 48%,
+                #ffffff 56%,
+                #ff9b9b 64%,
+                #ff4a4a 72%,
+                #ff1a1a 80%,
+                #ff6f6f 88%,
+                #ffd4d4 94%,
+                #ffffff 100%
+            );
+            background-size: 320% 320%;
+            background-position: 0% 0%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 0 14px rgba(255, 70, 70, 0.14));
+        }
+
+        @keyframes heroBreath {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.035); }
+        }
+
+        @keyframes titleGradientShift {
+            0% { background-position: 0% 0%; }
+            25% { background-position: 35% 25%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 65% 75%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .hero p {
+            margin-top: 10px;
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+            font-family: "Inter", sans-serif;
+        }
+
+        .hero-tagline {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            border-right: 2px solid rgba(255,255,255,0.65);
+            animation: typeReveal 2.3s steps(28, end) 0.35s forwards, blinkCaret 0.8s step-end infinite;
+        }
+
+        @keyframes typeReveal {
+            from { width: 0; }
+            to { width: 28ch; }
+        }
+
+        @keyframes blinkCaret {
+            0%, 100% { border-color: rgba(255,255,255,0.65); }
+            50% { border-color: transparent; }
+        }
+
+        .countdown-title {
+            margin-top: 60px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-family: "Inter", sans-serif;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .countdown-box {
+            margin-top: 20px;
+            padding: 30px 50px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            transition: 0.3s ease;
+            box-shadow: 0 0 0 rgba(255, 40, 40, 0);
+        }
+
+        .countdown-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255, 95, 95, 0.28);
+            box-shadow:
+                0 0 20px rgba(255, 50, 50, 0.14),
+                0 0 36px rgba(255, 30, 30, 0.10);
+        }
+
+        .countdown {
+            font-size: 72px;
+            font-weight: 600;
+            font-family: "Inter", sans-serif;
+        }
+
+        .page-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 120px 24px;
+            scroll-margin-top: 90px;
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.85s ease, transform 0.85s ease;
+        }
+
+        .page-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-card {
+            position: relative;
+            z-index: 1;
+            background: rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.24), 0 0 30px rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.10);
+        }
+
+        .section-card h2,
+        .section-card .about-text > p,
+        .section-card .about-quote,
+        .support-lead,
+        .support-grid {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .page-section.visible .section-card h2 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.05s;
+        }
+
+        .page-section.visible .section-card .about-text > p:nth-child(1) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.14s;
+        }
+
+        .page-section.visible .section-card .about-text > p:nth-child(2) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.24s;
+        }
+
+        .page-section.visible .section-card .about-quote {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.34s;
+        }
+
+        .page-section.visible .support-lead {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.14s;
+        }
+
+        .page-section.visible .support-grid {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.26s;
+        }
+
+        .section-card h2 {
+            margin: 0 0 18px 0;
+            font-size: 40px;
+            letter-spacing: 2px;
+            font-family: "Inter", sans-serif;
+        }
+
+        .section-card p {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.82);
+            font-family: "Inter", sans-serif;
+        }
+
+        .about-text {
+            display: grid;
+            gap: 18px;
+        }
+
+        .about-text p {
+            margin: 0;
+        }
+
+        .about-quote {
+            margin-top: 6px;
+            padding: 18px 20px;
+            border-left: 3px solid rgba(255, 90, 90, 0.55);
+            background: linear-gradient(90deg, rgba(255,35,35,0.08), rgba(255,35,35,0.02));
+            border-radius: 14px;
+            font-size: 17px;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.88);
+        }
+
+        .featured-episode {
+            margin-top: 28px;
+            margin-bottom: 34px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 28px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+            opacity: 0;
+            transform: translateY(32px);
+        }
+
+        .page-section.visible .featured-episode {
+            opacity: 1;
+            transform: translateY(0);
+            transition:
+                opacity 0.8s ease 0.08s,
+                transform 0.8s ease 0.08s,
+                box-shadow 0.35s ease,
+                background 0.35s ease,
+                border-color 0.35s ease;
+        }
+
+        .featured-episode:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.10);
+            border-color: rgba(255,255,255,0.18);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.24), 0 0 34px rgba(255,255,255,0.06);
+        }
+
+        .featured-thumb {
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.45s ease, filter 0.45s ease;
+        }
+
+        .featured-thumb::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.7)),
+                radial-gradient(circle at center, rgba(255,60,60,0.18), transparent 60%);
+            transition: opacity 0.35s ease;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            z-index: 3;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.72);
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: rgba(0,0,0,0.28);
+            border: 1px solid rgba(255,255,255,0.10);
+            pointer-events: none;
+        }
+
+        .featured-hover-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+            background: linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.28));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .featured-hover-pill {
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.92);
+            background: rgba(0,0,0,0.32);
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow:
+                0 0 18px rgba(255,255,255,0.05),
+                0 0 20px rgba(255,60,60,0.08);
+            transform: translateY(8px) scale(0.96);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .featured-episode:hover .featured-hover-overlay {
+            opacity: 1;
+        }
+
+        .featured-episode:hover .featured-hover-pill {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .featured-episode:hover .featured-thumb::before {
+            opacity: 0.9;
+        }
+
+        .featured-content {
+            padding: 32px 32px 32px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .featured-content-inner,
+        .episode-body {
+            transition: transform 0.28s ease;
+            will-change: transform;
+        }
+
+        .featured-label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.62);
+            margin-bottom: 8px;
+        }
+
+        .featured-title {
+            font-size: 40px;
+            line-height: 1.15;
+            margin: 0 0 12px 0;
+            font-family: "Inter", sans-serif;
+        }
+
+        .featured-meta {
+            font-size: 14px;
+            color: rgba(255,255,255,0.66);
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .featured-desc {
+            font-size: 16px;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.80);
+            margin: 0 0 22px 0;
+        }
+
+        .featured-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 30px;
+        }
+
+        .featured-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.4px;
+            transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease, border-color 0.28s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .featured-btn.primary {
+            color: #fff;
+            background: linear-gradient(90deg, rgba(255,50,50,0.22), rgba(255,85,85,0.16));
+            border: 1px solid rgba(255,110,110,0.26);
+            box-shadow: 0 0 18px rgba(255,55,55,0.08);
+        }
+
+        .featured-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .featured-btn.primary:hover {
+            box-shadow: 0 0 24px rgba(255,55,55,0.16);
+            background: linear-gradient(90deg, rgba(255,50,50,0.28), rgba(255,85,85,0.18));
+        }
+
+        .thumb-shine {
+            position: absolute;
+            top: -35%;
+            left: -160%;
+            width: 60%;
+            height: 170%;
+            background: linear-gradient(
+                115deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.06) 35%,
+                rgba(255,255,255,0.25) 50%,
+                rgba(255,255,255,0.06) 65%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: rotate(10deg);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .featured-episode:hover .thumb-shine,
+        .episode-card:hover .thumb-shine {
+            animation: shineSweep 0.9s ease forwards;
+        }
+
+        @keyframes shineSweep {
+            0% {
+                left: -160%;
+                opacity: 0;
+            }
+            15% {
+                opacity: 1;
+            }
+            100% {
+                left: 160%;
+                opacity: 0;
+            }
+        }
+
+        .thumb-label {
+            position: absolute;
+            bottom: 12px;
+            left: 14px;
+            z-index: 3;
+            font-size: 11px;
+            letter-spacing: 1.8px;
+            color: rgba(255,255,255,0.62);
+            pointer-events: none;
+        }
+
+        .episodes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .episode-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 24px 24px 30px 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+            min-height: 140px;
+            box-sizing: border-box;
+            width: 100%;
+            position: relative;
+            opacity: 0;
+            transform: translateY(34px);
+        }
+
+        .page-section.visible .episode-card {
+            opacity: 1;
+            transform: translateY(0);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease,
+                background 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .page-section.visible .episode-card:nth-child(1) {
+            transition-delay: 0.18s;
+        }
+
+        .page-section.visible .episode-card:nth-child(2) {
+            transition-delay: 0.32s;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            background: rgba(255,255,255,0.12);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.22), 0 0 28px rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.18);
+        }
+
+        .episode-thumb {
+            width: 100%;
+            height: 170px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.45s ease, filter 0.45s ease, border-color 0.35s ease;
+        }
+
+        .episode-thumb::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.65)),
+                radial-gradient(circle at center, rgba(255,60,60,0.15), transparent 60%);
+            transition: opacity 0.3s ease;
+        }
+
+        .episode-card:hover .episode-thumb::before {
+            opacity: 0.6;
+        }
+
+        .episode-card h3 {
+            margin: 0;
+            font-size: 20px;
+            font-family: "Inter", sans-serif;
+            line-height: 1.4;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .episode-card:hover h3 {
+            text-shadow: 0 0 16px rgba(255, 90, 90, 0.12);
+        }
+
+        .episode-runtime {
+            margin-top: 10px;
+            font-size: 12px;
+            letter-spacing: 1.6px;
+            color: rgba(255,255,255,0.56);
+            text-transform: uppercase;
+        }
+
+        .episode-date {
+            margin-top: 10px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 1px;
+            font-family: "Inter", sans-serif;
+        }
+
+        .episode-info {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.35s ease;
+            margin-top: 0;
+        }
+
+        .episode-card:hover .episode-info {
+            max-height: 220px;
+            opacity: 1;
+            margin-top: 18px;
+        }
+
+        .episode-info p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.78);
+            margin: 0;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.92);
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,70,70,1);
+            box-shadow:
+                0 0 8px rgba(255,55,55,0.95),
+                0 0 18px rgba(255,45,45,0.55);
+            animation: livePulse 1.2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes livePulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.35);
+                opacity: 0.65;
+            }
+        }
+
+        .episode-flash {
+            animation: episodeOutlineFlash 1s ease forwards;
+        }
+
+        .featured-flash {
+            animation: featuredOutlineFlash 1s ease forwards;
+        }
+
+        @keyframes episodeOutlineFlash {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255,255,255,0),
+                            0 0 0 0 rgba(255,255,255,0);
+                border-color: rgba(255,255,255,0.12);
+            }
+            20% {
+                box-shadow: 0 0 0 3px rgba(255,255,255,0.95),
+                            0 0 28px rgba(255,255,255,0.45);
+                border-color: rgba(255,255,255,1);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255,255,255,0),
+                            0 0 0 rgba(255,255,255,0);
+                border-color: rgba(255,255,255,0.12);
+            }
+        }
+
+        @keyframes featuredOutlineFlash {
+            0% {
+                box-shadow: 0 20px 60px rgba(0,0,0,0.18),
+                            0 0 0 0 rgba(255,255,255,0);
+                border-color: rgba(255,255,255,0.12);
+            }
+            20% {
+                box-shadow: 0 24px 70px rgba(0,0,0,0.24),
+                            0 0 0 3px rgba(255,255,255,0.95),
+                            0 0 34px rgba(255,255,255,0.35);
+                border-color: rgba(255,255,255,1);
+            }
+            100% {
+                box-shadow: 0 20px 60px rgba(0,0,0,0.18),
+                            0 0 0 0 rgba(255,255,255,0);
+                border-color: rgba(255,255,255,0.12);
+            }
+        }
+
+        .support-lead {
+            max-width: 760px;
+        }
+
+        .support-grid {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .support-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 18px;
+            padding: 24px 20px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease, background 0.32s ease;
+        }
+
+        .support-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.09);
+            border-color: rgba(255,255,255,0.16);
+            box-shadow: 0 18px 36px rgba(0,0,0,0.18), 0 0 20px rgba(255,255,255,0.04);
+        }
+
+        .support-icon {
+            font-size: 20px;
+            margin-bottom: 14px;
+            opacity: 0.85;
+        }
+
+        .support-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            font-family: "Inter", sans-serif;
+        }
+
+        .support-card p {
+            margin: 0 0 18px 0;
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.76);
+        }
+
+        .support-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.14);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.14);
+            border-color: rgba(255,255,255,0.22);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18), 0 0 24px rgba(255,255,255,0.06);
+        }
+
+        .site-footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 24px 60px;
+            color: rgba(255,255,255,0.55);
+            font-size: 14px;
+            letter-spacing: 0.4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .footer-left,
+        .footer-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .footer-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            opacity: 0.72;
+            font-size: 14px;
+        }
+
+        .footer-right a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.58);
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .footer-right a:hover {
+            color: rgba(255,255,255,0.9);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 900px) {
+            .featured-episode {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-content {
+                padding: 0 28px 28px 28px;
+            }
+
+            .support-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                cursor: default;
+            }
+
+            a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card {
+                cursor: pointer;
+            }
+
+            .custom-cursor-dot {
+                display: none;
+            }
+
+            .episodes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-aura {
+                width: 360px;
+                height: 180px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .countdown {
+                font-size: 52px;
+            }
+
+            .hero-tagline {
+                white-space: normal;
+                width: auto;
+                border-right: none;
+                animation: fadeTaglineMobile 1.2s ease forwards;
+                opacity: 0;
+            }
+
+            @keyframes fadeTaglineMobile {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .logo {
+                position: static;
+                transform: none;
+                text-align: center;
+                margin-bottom: 14px;
+            }
+
+            .navbar {
+                padding: 16px 20px;
+            }
+
+            .nav-links {
+                gap: 22px;
+            }
+
+            .site-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body class="page-loading">
+
+    <div class="bg-container">
+        <div class="bg-layer bg1" id="bg1"></div>
+        <div class="bg-layer bg2" id="bg2"></div>
+    </div>
+
+    <div class="grain-overlay"></div>
+
+    <div class="custom-cursor-dot" id="cursorDot"></div>
+
+    <div class="content">
+
+        <div class="navbar">
+            <div class="logo">𝔗𝔥𝔢 𝔑𝔢𝔴 𝔏𝔞𝔫𝔤 𝔗𝔦𝔪𝔢𝔰</div>
+
+            <div class="nav-links" id="navLinks">
+                <div class="nav-indicator" id="navIndicator"></div>
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#episodes" class="nav-link">Episodes</a>
+                <a href="#support" class="nav-link">Support Us</a>
+            </div>
+        </div>
+
+        <section class="hero" id="home">
+            <div class="hero-aura"></div>
+
+            <div class="hero-inner" id="heroInner">
+                <h1>T.I.M.E.S</h1>
+                <p><span class="hero-tagline">JOIN US ON WEDNESDAY 4/15/26</span></p>
+
+                <div class="countdown-title" id="countdownTitle">Get with the T.I.M.E.S.</div>
+
+                <div class="countdown-box" id="homeCountdownBox">
+                    <div class="countdown" id="countdown"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="about">
+            <div class="section-card">
+                <h2>ABOUT US</h2>
+
+                <div class="about-text">
+                    <p>
+                        Tristan, Isaac, Matthew, Eric, and Shayaan — these 5 entities have united to make sure just about anyone can keep up with the T.I.M.E.S.. Recently, the adoption of mindsets that inhibit growth among students has become exceedingly hard to ignore. Time after time again, innocent, terrifyingly approachable untruths seed within the fragile little minds of up and coming university students.
+                    </p>
+
+                    <p>
+                        By analyzing these great untruths as presented in <em>The Coddling of the American Mind</em> alongside the major untruths illustrated in Plato's <em>Allegory of the Cave</em>, we five sincerely hope to bring enlightenment to our dear viewers.
+                    </p>
+
+                    <div class="about-quote">
+                        Letting oneself experience discomfort, doing away with in-groups and out-groups, and treating emotions as secondary — indeed, that is how we at T.I.M.E.S can help our viewers keep up with the times.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="episodes">
+            <div class="section-card">
+                <h2>EPISODES</h2>
+
+                <div class="featured-episode parallax-card" id="featuredEpisode">
+                    <div class="featured-thumb parallax-media" style="background-image: url('https://codehs.com/uploads/ddaf3a1d2067e36825cd3feb4f995eb5');">
+                        <div class="featured-badge">LATEST FEATURE</div>
+                        <div class="thumb-shine"></div>
+                        <div class="featured-hover-overlay">
+                            <div class="featured-hover-pill">WATCH EPISODE</div>
+                        </div>
+                    </div>
+
+                    <div class="featured-content">
+                        <div class="featured-content-inner parallax-content">
+                            <div class="featured-label">FEATURED EPISODE</div>
+                            <h3 class="featured-title">Episode #1: Melania Trump</h3>
+                            <div class="featured-meta" id="featuredMetaText">Available in <span id="featured-ep1-timer"></span></div>
+                            <p class="featured-desc">
+                                They're in the cave... they're in our universities... they're EVERYWHERE! Join co-hosts Isaac and Shayaan as they discuss the blindness permeating society, the untruths. Is it all a facet of human nature? Can the youth be protected? Drop into episode 1 to find out what T.I.M.E.S. has to say about it all.
+                            </p>
+
+                            <div class="featured-actions">
+                                <a href="#" class="featured-btn primary">Watch Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="episodes-grid">
+                    <div class="episode-card parallax-card" id="episode1-card">
+                        <div class="episode-thumb parallax-media" style="background-image: url('https://codehs.com/uploads/ddaf3a1d2067e36825cd3feb4f995eb5');">
+                            <div class="thumb-shine"></div>
+                            <div class="thumb-label">EPISODE PREVIEW</div>
+                        </div>
+
+                        <div class="episode-body parallax-content">
+                            <h3>Episode #1: Melania Trump</h3>
+                            <div class="episode-runtime">Runtime: 15 min</div>
+                            <p class="episode-date" id="ep1DateText">Available in <span id="ep1-timer"></span></p>
+                            <div class="episode-info">
+                                <p>OUT NOW!!!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="episode-card parallax-card">
+                        <div class="episode-thumb parallax-media" style="background-image: url('https://codehs.com/uploads/8d15a73c209dfe74ce32d29cb01fefd8');">
+                            <div class="thumb-shine"></div>
+                            <div class="thumb-label">EPISODE PREVIEW</div>
+                        </div>
+
+                        <div class="episode-body parallax-content">
+                            <h3>Episode #2: Coming Soon!!!</h3>
+                            <div class="episode-runtime">Runtime: TBA</div>
+                            <p class="episode-date" id="ep2-date"></p>
+                            <div class="episode-info">
+                                <p>COMING SOON</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page-section" id="support">
+            <div class="section-card">
+                <h2>SUPPORT US</h2>
+
+                <p class="support-lead">
+                    Please support by following our Instagram and Youtube ╰(*°▽°*)╯
+                </p>
+
+                <div class="support-grid">
+                    <div class="support-card">
+                        <div class="support-icon">🔴</div>
+                        <h3>Follow the Project</h3>
+                        <p>Stay updated as new episodes release through T.I.M.E.S.</p>
+                        <a href="#" class="support-btn">Follow</a>
+                    </div>
+
+                    <div class="support-card">
+                        <div class="support-icon">↗</div>
+                        <h3>Share It</h3>
+                        <p>Show this to all your friends because you're so cool and awesome.</p>
+                        <a href="#" class="support-btn">Share</a>
+                    </div>
+
+                    <div class="support-card">
+                        <div class="support-icon">✉</div>
+                        <h3>Contact Us</h3>
+                        <p>Reach out with thoughts through our social media!</p>
+                        <a href="#" class="support-btn">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <div class="footer-left">
+                <span>The New Lang Times © 2026</span>
+            </div>
+            <div class="footer-right">
+                <a href="#"><span class="footer-icon">◉</span>Instagram</a>
+                <a href="#"><span class="footer-icon">▶</span>YouTube</a>
+                <a href="#"><span class="footer-icon">✉</span>Contact</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        function formatTimeUnit(value) {
+            return value < 10 ? "0" + value : value;
+        }
+
+        function formatCountdown(diff) {
+            const totalHours = Math.floor(diff / 3600000);
+            const minutes = Math.floor((diff % 3600000) / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            return `${totalHours}:${formatTimeUnit(minutes)}:${formatTimeUnit(seconds)}`;
+        }
+
+        function outNowHTML() {
+            return '<span class="live-indicator"><span class="live-dot"></span>OUT NOW!</span>';
+        }
+
+        function updateCountdown() {
+            const episode1Release = new Date("2026-04-15T23:59:59");
+            const episode2Release = new Date("2026-04-22T23:59:59");
+            const now = new Date();
+
+            const countdownTitle = document.getElementById("countdownTitle");
+            const mainCountdown = document.getElementById("countdown");
+            const ep1DateText = document.getElementById("ep1DateText");
+            const featuredMetaText = document.getElementById("featuredMetaText");
+
+            if (now < episode1Release) {
+                const diff1 = episode1Release - now;
+                const str1 = formatCountdown(diff1);
+
+                countdownTitle.innerText = "Get with the T.I.M.E.S.";
+                mainCountdown.innerText = str1;
+                ep1DateText.innerHTML = `Available in <span id="ep1-timer">${str1}</span>`;
+                featuredMetaText.innerHTML = `Available in <span id="featured-ep1-timer">${str1}</span>`;
+            } else if (now < episode2Release) {
+                const diff2 = episode2Release - now;
+                const str2 = formatCountdown(diff2);
+
+                countdownTitle.innerText = "Next Episode In";
+                mainCountdown.innerText = str2;
+                ep1DateText.innerHTML = outNowHTML();
+                featuredMetaText.innerHTML = outNowHTML();
+            } else {
+                countdownTitle.innerText = "Latest Episode";
+                mainCountdown.innerHTML = outNowHTML();
+                ep1DateText.innerHTML = outNowHTML();
+                featuredMetaText.innerHTML = outNowHTML();
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        function setEpisodeDates() {
+            const now = new Date();
+            const ep2 = new Date(now);
+            ep2.setDate(now.getDate() + 7);
+
+            document.getElementById("ep2-date").innerText =
+                "Releases: " + ep2.toDateString();
+        }
+
+        setEpisodeDates();
+
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sections = document.querySelectorAll("section[id]");
+        const pageSections = document.querySelectorAll(".page-section");
+        const navIndicator = document.getElementById("navIndicator");
+        const bg1 = document.getElementById("bg1");
+        const navbar = document.querySelector(".navbar");
+
+        function moveNavIndicatorTo(link) {
+            if (!link) return;
+            navIndicator.style.width = `${link.offsetWidth}px`;
+            navIndicator.style.left = `${link.offsetLeft}px`;
+        }
+
+        function setActiveLink(id) {
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === `#${id}`) {
+                    link.classList.add("active");
+                    moveNavIndicatorTo(link);
+                }
+            });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", function() {
+                const targetId = this.getAttribute("href").substring(1);
+                setActiveLink(targetId);
+            });
+        });
+
+        function revealSections() {
+            const triggerTop = window.innerHeight * 0.12;
+            const triggerBottom = window.innerHeight * 0.88;
+
+            pageSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const isVisible = rect.top < triggerBottom && rect.bottom > triggerTop;
+
+                if (isVisible) {
+                    section.classList.add("visible");
+                } else {
+                    section.classList.remove("visible");
+                }
+            });
+        }
+
+        function handleScroll() {
+            const scrollY = window.scrollY;
+
+            if (scrollY > 40) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+
+            const hero = document.getElementById("home");
+            const progress = Math.min(scrollY / (hero.offsetHeight * 1.2), 1);
+
+            document.getElementById("heroInner").style.transform =
+                `translateY(${-scrollY * 0.45}px)`;
+
+            document.getElementById("heroInner").style.opacity = 1 - progress;
+            document.getElementById("bg2").style.opacity = progress * 0.82;
+
+            const bgScale = 1 + (progress * 0.08);
+            const bgShift = scrollY * 0.02;
+            bg1.style.transform = `scale(${bgScale}) translateY(${bgShift}px)`;
+
+            let currentSection = "home";
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 120;
+                const sectionHeight = section.offsetHeight;
+
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute("id");
+                }
+            });
+
+            setActiveLink(currentSection);
+            revealSections();
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("load", () => {
+            handleScroll();
+            revealSections();
+            moveNavIndicatorTo(document.querySelector(".nav-link.active"));
+
+            requestAnimationFrame(() => {
+                document.body.classList.remove("page-loading");
+            });
+        });
+
+        window.addEventListener("resize", () => {
+            moveNavIndicatorTo(document.querySelector(".nav-link.active"));
+            revealSections();
+        });
+
+        const countdownBox = document.getElementById("homeCountdownBox");
+        const episodesSection = document.getElementById("episodes");
+        const episode1Card = document.getElementById("episode1-card");
+        const featuredEpisode = document.getElementById("featuredEpisode");
+
+        countdownBox.addEventListener("click", () => {
+            episodesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            setActiveLink("episodes");
+
+            setTimeout(() => {
+                episode1Card.classList.remove("episode-flash");
+                void episode1Card.offsetWidth;
+                episode1Card.classList.add("episode-flash");
+
+                featuredEpisode.classList.remove("featured-flash");
+                void featuredEpisode.offsetWidth;
+                featuredEpisode.classList.add("featured-flash");
+
+                setTimeout(() => {
+                    episode1Card.classList.remove("episode-flash");
+                    featuredEpisode.classList.remove("featured-flash");
+                }, 1000);
+            }, 700);
+        });
+
+        let featuredSeen = false;
+        const featuredObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !featuredSeen) {
+                    featuredSeen = true;
+
+                    featuredEpisode.classList.remove("featured-flash");
+                    void featuredEpisode.offsetWidth;
+                    featuredEpisode.classList.add("featured-flash");
+
+                    setTimeout(() => {
+                        featuredEpisode.classList.remove("featured-flash");
+                    }, 1000);
+                } else if (!entry.isIntersecting) {
+                    featuredSeen = false;
+                }
+            });
+        }, {
+            threshold: 0.45
+        });
+
+        featuredObserver.observe(episodesSection);
+
+        const parallaxCards = document.querySelectorAll(".parallax-card");
+
+        parallaxCards.forEach(card => {
+            const media = card.querySelector(".parallax-media");
+            const content = card.querySelector(".parallax-content");
+
+            card.addEventListener("mousemove", (e) => {
+                if (window.innerWidth <= 768) return;
+
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                if (media) {
+                    media.style.transform = `translate(${x * -10}px, ${y * -10}px) scale(1.04)`;
+                }
+
+                if (content) {
+                    content.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
+                }
+            });
+
+            card.addEventListener("mouseleave", () => {
+                if (media) media.style.transform = "";
+                if (content) content.style.transform = "";
+            });
+        });
+
+        const cursorDot = document.getElementById("cursorDot");
+
+        function showCursor() {
+            if (window.innerWidth > 768) {
+                document.body.classList.add("cursor-visible");
+            }
+        }
+
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+            showCursor();
+        });
+
+        window.addEventListener("mouseleave", () => {
+            document.body.classList.remove("cursor-visible");
+        });
+
+        window.addEventListener("mouseenter", () => {
+            showCursor();
+        });
+
+        const hoverTargets = document.querySelectorAll(
+            "a, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card"
+        );
+
+        hoverTargets.forEach(item => {
+            item.addEventListener("mouseenter", () => {
+                if (window.innerWidth > 768) {
+                    document.body.classList.add("cursor-hover");
+                }
+            });
+
+            item.addEventListener("mouseleave", () => {
+                document.body.classList.remove("cursor-hover");
+            });
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth <= 768) {
+                document.body.classList.remove("cursor-visible", "cursor-hover");
+            }
+        });
+    </script>
+
+</body>
+</html>
