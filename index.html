@@ -307,14 +307,14 @@
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
-    width: 0;
+    max-width: 0;
     border-right: 2px solid rgba(255,255,255,0.65);
-    animation: typeReveal 3s steps(60, end) 0.35s forwards, blinkCaret 0.8s step-end infinite;
+    animation: typeReveal 3s steps(42, end) 0.35s forwards, blinkCaret 0.8s step-end infinite;
 }
 
 @keyframes typeReveal {
-    from { width: 0; }
-    to { width: 100%; }
+    from { max-width: 0; }
+    to { max-width: 42ch; }
 }
 
         @keyframes blinkCaret {
