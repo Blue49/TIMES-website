@@ -1643,6 +1643,9 @@
     </div>
 
     <script>
+
+        window.history.scrollRestoration = "manual";
+        
         const EPISODE_1_LINK = "https://youtu.be/L3rErvUCawY";
         const EPISODE_2_LINK = "https://youtu.be/frtAKZ5kIUs";
 
@@ -1664,12 +1667,6 @@
                 desc: "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast."
             }
         };
-
-        window.history.scrollRestoration = "manual";
-
-        window.addEventListener("load", () => {
-            window.scrollTo(0, 0);
-        });
 
         let currentFeaturedLink = EPISODE_1_LINK;
         let currentFeaturedEpisode = 1;
@@ -1910,15 +1907,18 @@
         window.addEventListener("scroll", handleScroll);
 
         window.addEventListener("load", () => {
-            handleScroll();
-            revealSections();
-            moveNavIndicatorTo(document.querySelector(".nav-link.active"));
-
-            setTimeout(() => {
-                document.getElementById("siteLoader").classList.add("hidden");
-                document.body.classList.remove("page-loading");
-            }, 850);
-        });
+    
+        window.scrollTo(0, 0)
+    
+        handleScroll();
+        revealSections();
+        moveNavIndicatorTo(document.querySelector(".nav-link.active"));
+    
+        setTimeout(() => {
+            document.getElementById("siteLoader").classList.add("hidden");
+            document.body.classList.remove("page-loading");
+        }, 850);
+    });
 
         window.addEventListener("resize", () => {
             moveNavIndicatorTo(document.querySelector(".nav-link.active"));
