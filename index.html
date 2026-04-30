@@ -1643,379 +1643,410 @@
     </div>
 
     <script>
+    if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+    }
 
-        window.history.scrollRestoration = "manual";
-        
-        const EPISODE_1_LINK = "https://youtu.be/L3rErvUCawY";
-        const EPISODE_2_LINK = "https://youtu.be/frtAKZ5kIUs";
+    function forceTopOfPage() {
+        document.documentElement.style.scrollBehavior = "auto";
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
 
-        const episodeData = {
-            1: {
-                title: "Episode #1: Melania Trump",
-                image: "content.png",
-                runtime: "Runtime: 15 min",
-                status: "Released: 4/8/26",
-                link: EPISODE_1_LINK,
-                desc: "They're in the cave... they're in our universities... they're EVERYWHERE! Join co-hosts Isaac and Shayaan as they discuss the blindness permeating society, the untruths. Is it all a facet of human nature? Can the youth be protected? Drop into episode 1 to find out what T.I.M.E.S. has to say about it all."
-            },
-            2: {
-                title: "Episode #2: Triple T",
-                image: "triplet.jpg",
-                runtime: "Runtime: 14 MIN",
-                status: "Out Now",
-                link: EPISODE_2_LINK,
-                desc: "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast."
-            }
-        };
-
-        let currentFeaturedLink = EPISODE_1_LINK;
-        let currentFeaturedEpisode = 1;
-
-        function openFeaturedEpisode() {
-            openEpisodeModal(currentFeaturedEpisode);
-        }
-
-        function formatTimeUnit(value) {
-            return value < 10 ? "0" + value : value;
-        }
-
-        function formatCountdown(diff) {
-            const totalHours = Math.floor(diff / 3600000);
-            const minutes = Math.floor((diff % 3600000) / 60000);
-            const seconds = Math.floor((diff % 60000) / 1000);
-            return `${totalHours}:${formatTimeUnit(minutes)}:${formatTimeUnit(seconds)}`;
-        }
-
-        function outNowHTML() {
-            return '<span class="live-indicator"><span class="live-dot"></span>OUT NOW!</span>';
-        }
-
-        function updateTicker(text) {
-            document.getElementById("tickerTextOne").innerText = text;
-            document.getElementById("tickerTextTwo").innerText = text;
-        }
-
-        function updateCountdown() {
-            const episode2Release = new Date("2026-04-30T00:00:00");
-            const now = new Date();
-
-            const countdownTitle = document.getElementById("countdownTitle");
-            const mainCountdown = document.getElementById("countdown");
-            const ep1DateText = document.getElementById("ep1DateText");
-            const ep2DateText = document.getElementById("ep2-date");
-            const featuredMetaText = document.getElementById("featuredMetaText");
-
-            const featuredTitle = document.getElementById("featuredTitle");
-            const featuredDesc = document.getElementById("featuredDesc");
-            const featuredThumb = document.getElementById("featuredThumb");
-            const featuredWatchBtn = document.getElementById("featuredWatchBtn");
-            const ep2InfoText = document.getElementById("ep2-info-text");
-
-            if (now < episode2Release) {
-                const diff2 = episode2Release - now;
-                const str2 = formatCountdown(diff2);
-
-                countdownTitle.innerText = "Next Episode In";
-                mainCountdown.innerText = str2;
-
-                ep1DateText.innerText = "Released: 4/8/26";
-                ep2DateText.innerHTML = `Available in <span id="ep2-timer">${str2}</span>`;
-                featuredMetaText.innerHTML = outNowHTML();
-
-                featuredTitle.innerText = episodeData[1].title;
-                featuredDesc.innerText = episodeData[1].desc;
-
-                featuredThumb.style.backgroundImage = "url('content.png')";
-                featuredWatchBtn.href = EPISODE_1_LINK;
-                currentFeaturedLink = EPISODE_1_LINK;
-                currentFeaturedEpisode = 1;
-
-                ep2InfoText.innerText = "COMING SOON";
-                updateTicker(`NEXT: Episode #2: Triple T — ${str2}`);
-            } else {
-                countdownTitle.innerText = "Latest Episode";
-                mainCountdown.innerHTML = outNowHTML();
-
-                ep1DateText.innerText = "Released: 4/8/26";
-                ep2DateText.innerHTML = outNowHTML();
-                featuredMetaText.innerHTML = outNowHTML();
-
-                featuredTitle.innerText = episodeData[2].title;
-                featuredDesc.innerText = episodeData[2].desc;
-
-                featuredThumb.style.backgroundImage = "url('triplet.jpg')";
-                featuredWatchBtn.href = EPISODE_2_LINK;
-                currentFeaturedLink = EPISODE_2_LINK;
-                currentFeaturedEpisode = 2;
-
-                ep2InfoText.innerText = "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, bond overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast.";
-                updateTicker("LATEST: Episode #2: Triple T — OUT NOW");
-            }
-        }
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        function setEpisodeDates() {
-            document.getElementById("ep2-date").innerText = "Releases: Thu Apr 30 2026";
-        }
-
-        setEpisodeDates();
-
-        const episodeModal = document.getElementById("episodeModal");
-        const modalBackdrop = document.getElementById("modalBackdrop");
-        const modalClose = document.getElementById("modalClose");
-        const modalThumb = document.getElementById("modalThumb");
-        const modalTitle = document.getElementById("modalTitle");
-        const modalMeta = document.getElementById("modalMeta");
-        const modalDesc = document.getElementById("modalDesc");
-        const modalWatchBtn = document.getElementById("modalWatchBtn");
-        const featuredTrailerBtn = document.getElementById("featuredTrailerBtn");
-
-        function openEpisodeModal(episodeNumber) {
-            const episode = episodeData[episodeNumber];
-            if (!episode) return;
-
-            modalThumb.style.backgroundImage = `url('${episode.image}')`;
-            modalTitle.innerText = episode.title;
-            modalMeta.innerText = `${episode.runtime} • ${episode.status}`;
-            modalDesc.innerText = episode.desc;
-            modalWatchBtn.href = episode.link;
-
-            if (!episode.link || episode.link === "#") {
-                modalWatchBtn.classList.add("disabled");
-                modalWatchBtn.innerText = "Link Coming Soon";
-            } else {
-                modalWatchBtn.classList.remove("disabled");
-                modalWatchBtn.innerText = "Watch Episode";
-            }
-
-            episodeModal.classList.add("open");
-            episodeModal.setAttribute("aria-hidden", "false");
-            document.body.classList.add("modal-open");
-        }
-
-        function closeEpisodeModal() {
-            episodeModal.classList.remove("open");
-            episodeModal.setAttribute("aria-hidden", "true");
-            document.body.classList.remove("modal-open");
-        }
-
-        document.querySelectorAll("[data-episode]").forEach(item => {
-            item.addEventListener("click", (e) => {
-                e.preventDefault();
-                const episodeNumber = Number(item.dataset.episode);
-                openEpisodeModal(episodeNumber);
-            });
-        });
-
-        featuredTrailerBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            openEpisodeModal(currentFeaturedEpisode);
-        });
-
-        modalBackdrop.addEventListener("click", closeEpisodeModal);
-        modalClose.addEventListener("click", closeEpisodeModal);
-
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") closeEpisodeModal();
-        });
-
-        const navLinks = document.querySelectorAll(".nav-link");
-        const sections = document.querySelectorAll("section[id]");
-        const pageSections = document.querySelectorAll(".page-section");
-        const navIndicator = document.getElementById("navIndicator");
-        const bg1 = document.getElementById("bg1");
-        const navbar = document.querySelector(".navbar");
-
-        function moveNavIndicatorTo(link) {
-            if (!link) return;
-            navIndicator.style.width = `${link.offsetWidth}px`;
-            navIndicator.style.left = `${link.offsetLeft}px`;
-        }
-
-        function setActiveLink(id) {
-            navLinks.forEach(link => {
-                link.classList.remove("active");
-                if (link.getAttribute("href") === `#${id}`) {
-                    link.classList.add("active");
-                    moveNavIndicatorTo(link);
-                }
-            });
-        }
-
-        navLinks.forEach(link => {
-            link.addEventListener("click", function() {
-                const targetId = this.getAttribute("href").substring(1);
-                setActiveLink(targetId);
-            });
-        });
-
-        function revealSections() {
-            const triggerTop = window.innerHeight * 0.12;
-            const triggerBottom = window.innerHeight * 0.88;
-
-            pageSections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const isVisible = rect.top < triggerBottom && rect.bottom > triggerTop;
-
-                if (isVisible) {
-                    section.classList.add("visible");
-                } else {
-                    section.classList.remove("visible");
-                }
-            });
-        }
-
-        function handleScroll() {
-            const scrollY = window.scrollY;
-
-            if (scrollY > 40) {
-                navbar.classList.add("scrolled");
-            } else {
-                navbar.classList.remove("scrolled");
-            }
-
-            const hero = document.getElementById("home");
-            const progress = Math.min(scrollY / (hero.offsetHeight * 1.2), 1);
-
-            document.getElementById("heroInner").style.transform =
-                `translateY(${-scrollY * 0.45}px)`;
-
-            document.getElementById("heroInner").style.opacity = 1 - progress;
-            document.getElementById("bg2").style.opacity = progress * 0.82;
-
-            const bgScale = 1 + (progress * 0.08);
-            const bgShift = scrollY * 0.02;
-            bg1.style.transform = `scale(${bgScale}) translateY(${bgShift}px)`;
-
-            let currentSection = "home";
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                const sectionHeight = section.offsetHeight;
-
-                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                    currentSection = section.getAttribute("id");
-                }
-            });
-
-            setActiveLink(currentSection);
-            revealSections();
-        }
-
-        window.addEventListener("scroll", handleScroll);
-
-        window.addEventListener("load", () => {
-    
-        window.scrollTo(0, 0)
-    
-        handleScroll();
-        revealSections();
-        moveNavIndicatorTo(document.querySelector(".nav-link.active"));
-    
         setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            document.documentElement.style.scrollBehavior = "";
+        }, 0);
+    }
+
+    forceTopOfPage();
+
+    window.addEventListener("beforeunload", () => {
+        window.scrollTo(0, 0);
+    });
+
+    const EPISODE_1_LINK = "https://youtu.be/L3rErvUCawY";
+    const EPISODE_2_LINK = "https://youtu.be/frtAKZ5kIUs";
+
+    const episodeData = {
+        1: {
+            title: "Episode #1: Melania Trump",
+            image: "content.png",
+            runtime: "Runtime: 15 min",
+            status: "Released: 4/8/26",
+            link: EPISODE_1_LINK,
+            desc: "They're in the cave... they're in our universities... they're EVERYWHERE! Join co-hosts Isaac and Shayaan as they discuss the blindness permeating society, the untruths. Is it all a facet of human nature? Can the youth be protected? Drop into episode 1 to find out what T.I.M.E.S. has to say about it all."
+        },
+        2: {
+            title: "Episode #2: Triple T",
+            image: "triplet.jpg",
+            runtime: "Runtime: 14 MIN",
+            status: "Out Now",
+            link: EPISODE_2_LINK,
+            desc: "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast."
+        }
+    };
+
+    let currentFeaturedLink = EPISODE_1_LINK;
+    let currentFeaturedEpisode = 1;
+
+    function openFeaturedEpisode() {
+        openEpisodeModal(currentFeaturedEpisode);
+    }
+
+    function formatTimeUnit(value) {
+        return value < 10 ? "0" + value : value;
+    }
+
+    function formatCountdown(diff) {
+        const totalHours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+        return `${totalHours}:${formatTimeUnit(minutes)}:${formatTimeUnit(seconds)}`;
+    }
+
+    function outNowHTML() {
+        return '<span class="live-indicator"><span class="live-dot"></span>OUT NOW!</span>';
+    }
+
+    function updateTicker(text) {
+        const tickerOne = document.getElementById("tickerTextOne");
+        const tickerTwo = document.getElementById("tickerTextTwo");
+
+        if (tickerOne) tickerOne.innerText = text;
+        if (tickerTwo) tickerTwo.innerText = text;
+    }
+
+    function updateCountdown() {
+        const episode2Release = new Date("2026-04-30T00:00:00");
+        const now = new Date();
+
+        const countdownTitle = document.getElementById("countdownTitle");
+        const mainCountdown = document.getElementById("countdown");
+        const ep1DateText = document.getElementById("ep1DateText");
+        const ep2DateText = document.getElementById("ep2-date");
+        const featuredMetaText = document.getElementById("featuredMetaText");
+
+        const featuredTitle = document.getElementById("featuredTitle");
+        const featuredDesc = document.getElementById("featuredDesc");
+        const featuredThumb = document.getElementById("featuredThumb");
+        const featuredWatchBtn = document.getElementById("featuredWatchBtn");
+        const ep2InfoText = document.getElementById("ep2-info-text");
+
+        if (now < episode2Release) {
+            const diff2 = episode2Release - now;
+            const str2 = formatCountdown(diff2);
+
+            countdownTitle.innerText = "Next Episode In";
+            mainCountdown.innerText = str2;
+
+            ep1DateText.innerText = "Released: 4/8/26";
+            ep2DateText.innerHTML = `Available in <span id="ep2-timer">${str2}</span>`;
+            featuredMetaText.innerHTML = outNowHTML();
+
+            featuredTitle.innerText = episodeData[1].title;
+            featuredDesc.innerText = episodeData[1].desc;
+
+            featuredThumb.style.backgroundImage = "url('content.png')";
+            featuredWatchBtn.href = EPISODE_1_LINK;
+            currentFeaturedLink = EPISODE_1_LINK;
+            currentFeaturedEpisode = 1;
+
+            ep2InfoText.innerText = "COMING SOON";
+            updateTicker(`NEXT: Episode #2: Triple T — ${str2}`);
+        } else {
+            countdownTitle.innerText = "Latest Episode";
+            mainCountdown.innerHTML = outNowHTML();
+
+            ep1DateText.innerText = "Released: 4/8/26";
+            ep2DateText.innerHTML = outNowHTML();
+            featuredMetaText.innerHTML = outNowHTML();
+
+            featuredTitle.innerText = episodeData[2].title;
+            featuredDesc.innerText = episodeData[2].desc;
+
+            featuredThumb.style.backgroundImage = "url('triplet.jpg')";
+            featuredWatchBtn.href = EPISODE_2_LINK;
+            currentFeaturedLink = EPISODE_2_LINK;
+            currentFeaturedEpisode = 2;
+
+            ep2InfoText.innerText = "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, bond overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast.";
+            updateTicker("LATEST: Episode #2: Triple T — OUT NOW");
+        }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    function setEpisodeDates() {
+        document.getElementById("ep2-date").innerText = "Releases: Thu Apr 30 2026";
+    }
+
+    setEpisodeDates();
+
+    const episodeModal = document.getElementById("episodeModal");
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalClose = document.getElementById("modalClose");
+    const modalThumb = document.getElementById("modalThumb");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMeta = document.getElementById("modalMeta");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalWatchBtn = document.getElementById("modalWatchBtn");
+    const featuredTrailerBtn = document.getElementById("featuredTrailerBtn");
+
+    function openEpisodeModal(episodeNumber) {
+        const episode = episodeData[episodeNumber];
+        if (!episode) return;
+
+        modalThumb.style.backgroundImage = `url('${episode.image}')`;
+        modalTitle.innerText = episode.title;
+        modalMeta.innerText = `${episode.runtime} • ${episode.status}`;
+        modalDesc.innerText = episode.desc;
+        modalWatchBtn.href = episode.link;
+
+        if (!episode.link || episode.link === "#") {
+            modalWatchBtn.classList.add("disabled");
+            modalWatchBtn.innerText = "Link Coming Soon";
+        } else {
+            modalWatchBtn.classList.remove("disabled");
+            modalWatchBtn.innerText = "Watch Episode";
+        }
+
+        episodeModal.classList.add("open");
+        episodeModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+    }
+
+    function closeEpisodeModal() {
+        episodeModal.classList.remove("open");
+        episodeModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+    }
+
+    document.querySelectorAll("[data-episode]").forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            const episodeNumber = Number(item.dataset.episode);
+            openEpisodeModal(episodeNumber);
+        });
+    });
+
+    featuredTrailerBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        openEpisodeModal(currentFeaturedEpisode);
+    });
+
+    modalBackdrop.addEventListener("click", closeEpisodeModal);
+    modalClose.addEventListener("click", closeEpisodeModal);
+
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeEpisodeModal();
+    });
+
+    const navLinks = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll("section[id]");
+    const pageSections = document.querySelectorAll(".page-section");
+    const navIndicator = document.getElementById("navIndicator");
+    const bg1 = document.getElementById("bg1");
+    const navbar = document.querySelector(".navbar");
+
+    function moveNavIndicatorTo(link) {
+        if (!link) return;
+        navIndicator.style.width = `${link.offsetWidth}px`;
+        navIndicator.style.left = `${link.offsetLeft}px`;
+    }
+
+    function setActiveLink(id) {
+        navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${id}`) {
+                link.classList.add("active");
+                moveNavIndicatorTo(link);
+            }
+        });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener("click", function() {
+            const targetId = this.getAttribute("href").substring(1);
+            setActiveLink(targetId);
+        });
+    });
+
+    function revealSections() {
+        const triggerTop = window.innerHeight * 0.12;
+        const triggerBottom = window.innerHeight * 0.88;
+
+        pageSections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const isVisible = rect.top < triggerBottom && rect.bottom > triggerTop;
+
+            if (isVisible) {
+                section.classList.add("visible");
+            } else {
+                section.classList.remove("visible");
+            }
+        });
+    }
+
+    function handleScroll() {
+        const scrollY = window.scrollY;
+
+        if (scrollY > 40) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
+
+        const hero = document.getElementById("home");
+        const progress = Math.min(scrollY / (hero.offsetHeight * 1.2), 1);
+
+        document.getElementById("heroInner").style.transform =
+            `translateY(${-scrollY * 0.45}px)`;
+
+        document.getElementById("heroInner").style.opacity = 1 - progress;
+        document.getElementById("bg2").style.opacity = progress * 0.82;
+
+        const bgScale = 1 + (progress * 0.08);
+        const bgShift = scrollY * 0.02;
+        bg1.style.transform = `scale(${bgScale}) translateY(${bgShift}px)`;
+
+        let currentSection = "home";
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 150;
+            const sectionHeight = section.offsetHeight;
+
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute("id");
+            }
+        });
+
+        setActiveLink(currentSection);
+        revealSections();
+    }
+
+    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("load", () => {
+        forceTopOfPage();
+
+        setTimeout(() => {
+            forceTopOfPage();
+            setActiveLink("home");
+
+            handleScroll();
+            revealSections();
+            moveNavIndicatorTo(document.querySelector(".nav-link.active"));
+
             document.getElementById("siteLoader").classList.add("hidden");
             document.body.classList.remove("page-loading");
         }, 850);
     });
 
-        window.addEventListener("resize", () => {
-            moveNavIndicatorTo(document.querySelector(".nav-link.active"));
-            revealSections();
-        });
+    window.addEventListener("pageshow", () => {
+        forceTopOfPage();
+        setActiveLink("home");
+    });
 
-        const countdownBox = document.getElementById("homeCountdownBox");
-        const episodesSection = document.getElementById("episodes");
-        const featuredEpisode = document.getElementById("featuredEpisode");
+    window.addEventListener("resize", () => {
+        moveNavIndicatorTo(document.querySelector(".nav-link.active"));
+        revealSections();
+    });
 
-        countdownBox.addEventListener("click", () => {
-            episodesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-            setActiveLink("episodes");
+    const countdownBox = document.getElementById("homeCountdownBox");
+    const episodesSection = document.getElementById("episodes");
+    const featuredEpisode = document.getElementById("featuredEpisode");
+
+    countdownBox.addEventListener("click", () => {
+        episodesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        setActiveLink("episodes");
+
+        setTimeout(() => {
+            featuredEpisode.classList.remove("featured-flash");
+            void featuredEpisode.offsetWidth;
+            featuredEpisode.classList.add("featured-flash");
 
             setTimeout(() => {
                 featuredEpisode.classList.remove("featured-flash");
-                void featuredEpisode.offsetWidth;
-                featuredEpisode.classList.add("featured-flash");
+            }, 1000);
+        }, 700);
+    });
 
-                setTimeout(() => {
-                    featuredEpisode.classList.remove("featured-flash");
-                }, 1000);
-            }, 700);
-        });
+    const parallaxCards = document.querySelectorAll(".parallax-card");
 
-        const parallaxCards = document.querySelectorAll(".parallax-card");
+    parallaxCards.forEach(card => {
+        const media = card.querySelector(".parallax-media");
+        const content = card.querySelector(".parallax-content");
 
-        parallaxCards.forEach(card => {
-            const media = card.querySelector(".parallax-media");
-            const content = card.querySelector(".parallax-content");
+        card.addEventListener("mousemove", (e) => {
+            if (window.innerWidth <= 768) return;
 
-            card.addEventListener("mousemove", (e) => {
-                if (window.innerWidth <= 768) return;
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-                const rect = card.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width - 0.5;
-                const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-                if (media) {
-                    media.style.transform = `translate(${x * -10}px, ${y * -10}px) scale(1.04)`;
-                }
-
-                if (content) {
-                    content.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
-                }
-            });
-
-            card.addEventListener("mouseleave", () => {
-                if (media) media.style.transform = "";
-                if (content) content.style.transform = "";
-            });
-        });
-
-        const cursorDot = document.getElementById("cursorDot");
-
-        function showCursor() {
-            if (window.innerWidth > 768) {
-                document.body.classList.add("cursor-visible");
+            if (media) {
+                media.style.transform = `translate(${x * -10}px, ${y * -10}px) scale(1.04)`;
             }
+
+            if (content) {
+                content.style.transform = `translate(${x * 8}px, ${y * 8}px)`;
+            }
+        });
+
+        card.addEventListener("mouseleave", () => {
+            if (media) media.style.transform = "";
+            if (content) content.style.transform = "";
+        });
+    });
+
+    const cursorDot = document.getElementById("cursorDot");
+
+    function showCursor() {
+        if (window.innerWidth > 768) {
+            document.body.classList.add("cursor-visible");
         }
+    }
 
-        window.addEventListener("mousemove", (e) => {
-            cursorDot.style.left = `${e.clientX}px`;
-            cursorDot.style.top = `${e.clientY}px`;
-            showCursor();
-        });
+    window.addEventListener("mousemove", (e) => {
+        cursorDot.style.left = `${e.clientX}px`;
+        cursorDot.style.top = `${e.clientY}px`;
+        showCursor();
+    });
 
-        window.addEventListener("mouseleave", () => {
-            document.body.classList.remove("cursor-visible");
-        });
+    window.addEventListener("mouseleave", () => {
+        document.body.classList.remove("cursor-visible");
+    });
 
-        window.addEventListener("mouseenter", () => {
-            showCursor();
-        });
+    window.addEventListener("mouseenter", () => {
+        showCursor();
+    });
 
-        const hoverTargets = document.querySelectorAll(
-            "a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card"
-        );
+    const hoverTargets = document.querySelectorAll(
+        "a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card"
+    );
 
-        hoverTargets.forEach(item => {
-            item.addEventListener("mouseenter", () => {
-                if (window.innerWidth > 768) {
-                    document.body.classList.add("cursor-hover");
-                }
-            });
-
-            item.addEventListener("mouseleave", () => {
-                document.body.classList.remove("cursor-hover");
-            });
-        });
-
-        window.addEventListener("resize", () => {
-            if (window.innerWidth <= 768) {
-                document.body.classList.remove("cursor-visible", "cursor-hover");
+    hoverTargets.forEach(item => {
+        item.addEventListener("mouseenter", () => {
+            if (window.innerWidth > 768) {
+                document.body.classList.add("cursor-hover");
             }
         });
-    </script>
+
+        item.addEventListener("mouseleave", () => {
+            document.body.classList.remove("cursor-hover");
+        });
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth <= 768) {
+            document.body.classList.remove("cursor-visible", "cursor-hover");
+        }
+    });
+</script>
 
 </body>
 </html>
