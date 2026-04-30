@@ -290,45 +290,50 @@
         }
 
         .latest-ticker {
-    position: sticky;
-    top: 58px;
-    z-index: 45;
-    height: 34px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    background: rgba(10, 0, 0, 0.55);
-    border-bottom: 1px solid rgba(255, 70, 70, 0.12);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.18);
-}
+            position: sticky;
+            top: 58px;
+            z-index: 45;
+            height: 34px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: rgba(10, 0, 0, 0.55);
+            border-bottom: 1px solid rgba(255, 70, 70, 0.12);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+        }
 
-.ticker-track {
-    display: inline-flex;
-    white-space: nowrap;
-    animation: tickerScroll 18s linear infinite;
-    padding-left: 100%;
-}
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: tickerScroll 23s linear infinite;
+        }
 
-.ticker-content {
-    display: inline-flex;
-    align-items: center;
-    gap: 18px;
-    white-space: nowrap;
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: rgba(255,255,255,0.78);
-    text-transform: uppercase;
-}
+        .ticker-content {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-right: 18px;
+            white-space: nowrap;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.78);
+            text-transform: uppercase;
+        }
 
-@keyframes tickerScroll {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-100%);
-    }
-}
+        .ticker-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255,70,70,1);
+            box-shadow: 0 0 10px rgba(255,60,60,0.9);
+            flex-shrink: 0;
+        }
+
+        @keyframes tickerScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
 
         .hero {
             min-height: 100vh;
@@ -523,83 +528,83 @@
         }
 
         .countdown-box {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .countdown-box .border-line {
-            position: absolute;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 70, 70, 1),
-                rgba(255, 255, 255, 0.95),
-                transparent
-            );
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease;
-            box-shadow: 0 0 14px rgba(255, 60, 60, 0.9);
-        }
-        
-        .countdown-box:hover .border-line {
-            opacity: 1;
-        }
-        
-        .countdown-box .top-line {
-            top: 0;
-            left: 0;
-            height: 3px;
-            width: 100%;
-            animation: moveTop 1.8s linear infinite;
-        }
-        
-        .countdown-box .right-line {
-            top: 0;
-            right: 0;
-            width: 3px;
-            height: 100%;
-            animation: moveRight 1.8s linear infinite;
-            animation-delay: 0.45s;
-        }
-        
-        .countdown-box .bottom-line {
-            bottom: 0;
-            right: 0;
-            height: 3px;
-            width: 100%;
-            animation: moveBottom 1.8s linear infinite;
-            animation-delay: 0.9s;
-        }
-        
-        .countdown-box .left-line {
-            bottom: 0;
-            left: 0;
-            width: 3px;
-            height: 100%;
-            animation: moveLeft 1.8s linear infinite;
-            animation-delay: 1.35s;
-        }
-        
-        @keyframes moveTop {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(100%); }
-        }
-        
-        @keyframes moveRight {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(100%); }
-        }
-        
-        @keyframes moveBottom {
-            from { transform: translateX(100%); }
-            to { transform: translateX(-100%); }
-        }
-        
-        @keyframes moveLeft {
-            from { transform: translateY(100%); }
-            to { transform: translateY(-100%); }
-        }
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-box .border-line {
+    position: absolute;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 70, 70, 1),
+        rgba(255, 255, 255, 0.95),
+        transparent
+    );
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    box-shadow: 0 0 14px rgba(255, 60, 60, 0.9);
+}
+
+.countdown-box:hover .border-line {
+    opacity: 1;
+}
+
+.countdown-box .top-line {
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    animation: moveTop 1.8s linear infinite;
+}
+
+.countdown-box .right-line {
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    animation: moveRight 1.8s linear infinite;
+    animation-delay: 0.45s;
+}
+
+.countdown-box .bottom-line {
+    bottom: 0;
+    right: 0;
+    height: 3px;
+    width: 100%;
+    animation: moveBottom 1.8s linear infinite;
+    animation-delay: 0.9s;
+}
+
+.countdown-box .left-line {
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    animation: moveLeft 1.8s linear infinite;
+    animation-delay: 1.35s;
+}
+
+@keyframes moveTop {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+}
+
+@keyframes moveRight {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+}
+
+@keyframes moveBottom {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+@keyframes moveLeft {
+    from { transform: translateY(100%); }
+    to { transform: translateY(-100%); }
+}
 
         .page-section {
             max-width: 1020px;
@@ -1509,10 +1514,16 @@
         <div class="latest-ticker" aria-label="Latest updates">
             <div class="ticker-track">
                 <div class="ticker-content">
-                    <span class="ticker-dot"></span><span id="tickerTextOne">🔴 LATEST: Episode #2: Triple T — OUT NOW |</span>
-                    <span class="ticker-dot"></span><span>✨ Follow @timespodcasts |</span>
-                    <span class="ticker-dot"></span><span>Are you ready to get with the T.I.M.E.S? 👁️</span>
+                    <span class="ticker-dot"></span><span id="tickerTextOne">LATEST: Episode #2: Triple T — OUT NOW</span>
+                    <span class="ticker-dot"></span><span>Follow @timespodcasts</span>
+                    <span class="ticker-dot"></span><span>Are you ready to get with the T.I.M.E.S?</span>
                 </div>
+                <div class="ticker-content">
+                    <span class="ticker-dot"></span><span id="tickerTextTwo">LATEST: Episode #2: Triple T — OUT NOW</span>
+                    <span class="ticker-dot"></span><span>Follow @timespodcasts</span>
+                    <span class="ticker-dot"></span><span>Are you ready to get with the T.I.M.E.S?</span>
+                </div>
+            </div>
         </div>
 
         <section class="hero" id="home">
@@ -1784,10 +1795,12 @@
     }
 
     function updateTicker(text) {
-    const tickerOne = document.getElementById("tickerTextOne");
-    if (tickerOne) tickerOne.innerText = text;
-}
+        const tickerOne = document.getElementById("tickerTextOne");
+        const tickerTwo = document.getElementById("tickerTextTwo");
 
+        if (tickerOne) tickerOne.innerText = text;
+        if (tickerTwo) tickerTwo.innerText = text;
+    }
 
     function updateCountdown() {
         const episode2Release = new Date("2026-04-30T00:00:00");
