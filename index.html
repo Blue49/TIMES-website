@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+moother
+moother<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -526,6 +527,50 @@
             font-weight: 600;
             font-family: "Inter", sans-serif;
         }
+
+        .countdown-box {
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-box::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    padding: 2px;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 250deg,
+        rgba(255, 70, 70, 0.95) 300deg,
+        rgba(255, 255, 255, 0.95) 330deg,
+        transparent 360deg
+    );
+    opacity: 0;
+    animation: outlineSpin 1.4s linear infinite;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+.countdown-box:hover::before {
+    opacity: 1;
+}
+
+@keyframes outlineSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 
         .page-section {
             max-width: 1020px;
