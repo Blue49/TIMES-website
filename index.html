@@ -1961,7 +1961,13 @@
     const featuredEpisode = document.getElementById("featuredEpisode");
 
     countdownBox.addEventListener("click", () => {
-        episodesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        const offset = 80;
+const y = episodesSection.getBoundingClientRect().top + window.scrollY - offset;
+
+window.scrollTo({
+    top: y,
+    behavior: "smooth"
+});
         setActiveLink("episodes");
 
         setTimeout(() => {
