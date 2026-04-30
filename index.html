@@ -1665,6 +1665,12 @@
             }
         };
 
+        window.history.scrollRestoration = "manual";
+
+        window.addEventListener("load", () => {
+            window.scrollTo(0, 0);
+        });
+
         let currentFeaturedLink = EPISODE_1_LINK;
         let currentFeaturedEpisode = 1;
 
