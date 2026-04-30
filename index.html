@@ -533,43 +533,78 @@ moother<!DOCTYPE html>
     overflow: hidden;
 }
 
-.countdown-box::before {
-    content: "";
+.countdown-box .border-line {
     position: absolute;
-    inset: -2px;
-    border-radius: 18px;
-    padding: 2px;
-    background: conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        transparent 250deg,
-        rgba(255, 70, 70, 0.95) 300deg,
-        rgba(255, 255, 255, 0.95) 330deg,
-        transparent 360deg
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 70, 70, 1),
+        rgba(255, 255, 255, 0.95),
+        transparent
     );
     opacity: 0;
-    animation: outlineSpin 1.4s linear infinite;
-    transition: opacity 0.25s ease;
     pointer-events: none;
-
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    transition: opacity 0.25s ease;
+    box-shadow: 0 0 14px rgba(255, 60, 60, 0.9);
 }
 
-.countdown-box:hover::before {
+.countdown-box:hover .border-line {
     opacity: 1;
 }
 
-@keyframes outlineSpin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.countdown-box .top-line {
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    animation: moveTop 1.8s linear infinite;
+}
+
+.countdown-box .right-line {
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    animation: moveRight 1.8s linear infinite;
+    animation-delay: 0.45s;
+}
+
+.countdown-box .bottom-line {
+    bottom: 0;
+    right: 0;
+    height: 2px;
+    width: 100%;
+    animation: moveBottom 1.8s linear infinite;
+    animation-delay: 0.9s;
+}
+
+.countdown-box .left-line {
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    animation: moveLeft 1.8s linear infinite;
+    animation-delay: 1.35s;
+}
+
+@keyframes moveTop {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100%); }
+}
+
+@keyframes moveRight {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+}
+
+@keyframes moveBottom {
+    from { transform: translateX(100%); }
+    to { transform: translateX(-100%); }
+}
+
+@keyframes moveLeft {
+    from { transform: translateY(100%); }
+    to { transform: translateY(-100%); }
 }
 
         .page-section {
@@ -1508,8 +1543,12 @@ moother<!DOCTYPE html>
                 <div class="countdown-title" id="countdownTitle">Get with the T.I.M.E.S.</div>
 
                 <div class="countdown-box" id="homeCountdownBox">
-                    <div class="countdown" id="countdown"></div>
-                </div>
+                    <span class="border-line top-line"></span>
+                    <span class="border-line right-line"></span>
+                    <span class="border-line bottom-line"></span>
+                    <span class="border-line left-line"></span>
+                <div class="countdown" id="countdown"></div>
+            </div>
             </div>
         </section>
 
