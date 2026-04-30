@@ -8,9 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             margin: 0;
@@ -125,9 +123,7 @@
             transition: transform 0.18s ease, opacity 0.2s ease, box-shadow 0.18s ease;
         }
 
-        body.cursor-visible .custom-cursor-dot {
-            opacity: 1;
-        }
+        body.cursor-visible .custom-cursor-dot { opacity: 1; }
 
         body.cursor-hover .custom-cursor-dot {
             transform: translate(-50%, -50%) scale(1.28);
@@ -196,13 +192,8 @@
             transform: translateY(-2px);
         }
 
-        .nav-links a::after {
-            content: none;
-        }
-
-        .nav-links a.active {
-            color: #fff;
-        }
+        .nav-links a::after { content: none; }
+        .nav-links a.active { color: #fff; }
 
         .nav-indicator {
             position: absolute;
@@ -465,9 +456,7 @@
             gap: 18px;
         }
 
-        .about-text p {
-            margin: 0;
-        }
+        .about-text p { margin: 0; }
 
         .about-quote {
             margin-top: 6px;
@@ -579,18 +568,12 @@
             opacity: 0;
         }
 
-        .featured-episode:hover .featured-hover-overlay {
-            opacity: 1;
-        }
-
+        .featured-episode:hover .featured-hover-overlay { opacity: 1; }
         .featured-episode:hover .featured-hover-pill {
             transform: translateY(0) scale(1);
             opacity: 1;
         }
-
-        .featured-episode:hover .featured-thumb::before {
-            opacity: 0.9;
-        }
+        .featured-episode:hover .featured-thumb::before { opacity: 0.9; }
 
         .featured-content {
             padding: 32px 32px 32px 0;
@@ -662,9 +645,7 @@
             box-shadow: 0 0 18px rgba(255,55,55,0.08);
         }
 
-        .featured-btn:hover {
-            transform: translateY(-2px);
-        }
+        .featured-btn:hover { transform: translateY(-2px); }
 
         .featured-btn.primary:hover {
             box-shadow: 0 0 24px rgba(255,55,55,0.16);
@@ -696,17 +677,9 @@
         }
 
         @keyframes shineSweep {
-            0% {
-                left: -160%;
-                opacity: 0;
-            }
-            15% {
-                opacity: 1;
-            }
-            100% {
-                left: 160%;
-                opacity: 0;
-            }
+            0% { left: -160%; opacity: 0; }
+            15% { opacity: 1; }
+            100% { left: 160%; opacity: 0; }
         }
 
         .thumb-label {
@@ -757,13 +730,8 @@
                 border-color 0.3s ease;
         }
 
-        .page-section.visible .episode-card:nth-child(1) {
-            transition-delay: 0.18s;
-        }
-
-        .page-section.visible .episode-card:nth-child(2) {
-            transition-delay: 0.32s;
-        }
+        .page-section.visible .episode-card:nth-child(1) { transition-delay: 0.18s; }
+        .page-section.visible .episode-card:nth-child(2) { transition-delay: 0.32s; }
 
         .episode-card:hover {
             transform: translateY(-6px) scale(1.02);
@@ -795,9 +763,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .episode-card:hover .episode-thumb::before {
-            opacity: 0.6;
-        }
+        .episode-card:hover .episode-thumb::before { opacity: 0.6; }
 
         .episode-card h3 {
             margin: 0;
@@ -807,9 +773,7 @@
             transition: text-shadow 0.3s ease;
         }
 
-        .episode-card:hover h3 {
-            text-shadow: 0 0 16px rgba(255, 90, 90, 0.12);
-        }
+        .episode-card:hover h3 { text-shadow: 0 0 16px rgba(255, 90, 90, 0.12); }
 
         .episode-runtime {
             margin-top: 10px;
@@ -871,64 +835,44 @@
         }
 
         @keyframes livePulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.35);
-                opacity: 0.65;
-            }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.35); opacity: 0.65; }
         }
 
-        .episode-flash {
-            animation: episodeOutlineFlash 1s ease forwards;
-        }
-
-        .featured-flash {
-            animation: featuredOutlineFlash 1s ease forwards;
-        }
+        .episode-flash { animation: episodeOutlineFlash 1s ease forwards; }
+        .featured-flash { animation: featuredOutlineFlash 1s ease forwards; }
 
         @keyframes episodeOutlineFlash {
             0% {
-                box-shadow: 0 0 0 0 rgba(255,255,255,0),
-                            0 0 0 0 rgba(255,255,255,0);
+                box-shadow: 0 0 0 0 rgba(255,255,255,0), 0 0 0 0 rgba(255,255,255,0);
                 border-color: rgba(255,255,255,0.12);
             }
             20% {
-                box-shadow: 0 0 0 3px rgba(255,255,255,0.95),
-                            0 0 28px rgba(255,255,255,0.45);
+                box-shadow: 0 0 0 3px rgba(255,255,255,0.95), 0 0 28px rgba(255,255,255,0.45);
                 border-color: rgba(255,255,255,1);
             }
             100% {
-                box-shadow: 0 0 0 0 rgba(255,255,255,0),
-                            0 0 0 rgba(255,255,255,0);
+                box-shadow: 0 0 0 0 rgba(255,255,255,0), 0 0 0 rgba(255,255,255,0);
                 border-color: rgba(255,255,255,0.12);
             }
         }
 
         @keyframes featuredOutlineFlash {
             0% {
-                box-shadow: 0 20px 60px rgba(0,0,0,0.18),
-                            0 0 0 0 rgba(255,255,255,0);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 0 0 0 rgba(255,255,255,0);
                 border-color: rgba(255,255,255,0.12);
             }
             20% {
-                box-shadow: 0 24px 70px rgba(0,0,0,0.24),
-                            0 0 0 3px rgba(255,255,255,0.95),
-                            0 0 34px rgba(255,255,255,0.35);
+                box-shadow: 0 24px 70px rgba(0,0,0,0.24), 0 0 0 3px rgba(255,255,255,0.95), 0 0 34px rgba(255,255,255,0.35);
                 border-color: rgba(255,255,255,1);
             }
             100% {
-                box-shadow: 0 20px 60px rgba(0,0,0,0.18),
-                            0 0 0 0 rgba(255,255,255,0);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 0 0 0 rgba(255,255,255,0);
                 border-color: rgba(255,255,255,0.12);
             }
         }
 
-        .support-lead {
-            max-width: 760px;
-        }
+        .support-lead { max-width: 760px; }
 
         .support-grid {
             margin-top: 28px;
@@ -1042,48 +986,28 @@
         }
 
         @media (max-width: 900px) {
-            .featured-episode {
-                grid-template-columns: 1fr;
-            }
-
-            .featured-content {
-                padding: 0 28px 28px 28px;
-            }
-
-            .support-grid {
-                grid-template-columns: 1fr;
-            }
+            .featured-episode { grid-template-columns: 1fr; }
+            .featured-content { padding: 0 28px 28px 28px; }
+            .support-grid { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 768px) {
-            body {
-                cursor: default;
-            }
+            body { cursor: default; }
 
             a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card {
                 cursor: pointer;
             }
 
-            .custom-cursor-dot {
-                display: none;
-            }
-
-            .episodes-grid {
-                grid-template-columns: 1fr;
-            }
+            .custom-cursor-dot { display: none; }
+            .episodes-grid { grid-template-columns: 1fr; }
 
             .hero-aura {
                 width: 360px;
                 height: 180px;
             }
 
-            .hero h1 {
-                font-size: 52px;
-            }
-
-            .countdown {
-                font-size: 52px;
-            }
+            .hero h1 { font-size: 52px; }
+            .countdown { font-size: 52px; }
 
             .hero-tagline {
                 white-space: normal;
@@ -1111,13 +1035,8 @@
                 margin-bottom: 14px;
             }
 
-            .navbar {
-                padding: 16px 20px;
-            }
-
-            .nav-links {
-                gap: 22px;
-            }
+            .navbar { padding: 16px 20px; }
+            .nav-links { gap: 22px; }
 
             .site-footer {
                 flex-direction: column;
@@ -1126,6 +1045,7 @@
         }
     </style>
 </head>
+
 <body class="page-loading">
 
     <div class="bg-container">
@@ -1134,7 +1054,6 @@
     </div>
 
     <div class="grain-overlay"></div>
-
     <div class="custom-cursor-dot" id="cursorDot"></div>
 
     <div class="content">
@@ -1191,28 +1110,39 @@
                 <h2>EPISODES</h2>
 
                 <div class="featured-episode parallax-card" id="featuredEpisode">
-                    <div class="featured-thumb parallax-media"
-     style="background-image: url('content.png');"
-     onclick="window.open('https://youtu.be/L3rErvUCawY', '_blank')">
-    
-    <div class="featured-badge">LATEST FEATURE</div>
-    <div class="thumb-shine"></div>
-    <div class="featured-hover-overlay">
-        <div class="featured-hover-pill">WATCH EPISODE</div>
-    </div>
-</div>
+                    <div
+                        class="featured-thumb parallax-media"
+                        id="featuredThumb"
+                        style="background-image: url('content.png');"
+                        onclick="openFeaturedEpisode()"
+                    >
+                        <div class="featured-badge">LATEST FEATURE</div>
+                        <div class="thumb-shine"></div>
+                        <div class="featured-hover-overlay">
+                            <div class="featured-hover-pill">WATCH EPISODE</div>
+                        </div>
+                    </div>
 
                     <div class="featured-content">
                         <div class="featured-content-inner parallax-content">
                             <div class="featured-label">FEATURED EPISODE</div>
-                            <h3 class="featured-title">Episode #1: Melania Trump</h3>
+                            <h3 class="featured-title" id="featuredTitle">Episode #1: Melania Trump</h3>
                             <div class="featured-meta" id="featuredMetaText">Available in <span id="featured-ep1-timer"></span></div>
-                            <p class="featured-desc">
+
+                            <p class="featured-desc" id="featuredDesc">
                                 They're in the cave... they're in our universities... they're EVERYWHERE! Join co-hosts Isaac and Shayaan as they discuss the blindness permeating society, the untruths. Is it all a facet of human nature? Can the youth be protected? Drop into episode 1 to find out what T.I.M.E.S. has to say about it all.
                             </p>
 
                             <div class="featured-actions">
-                                <a href="https://youtu.be/L3rErvUCawY" class="featured-btn primary">Watch Now</a>
+                                <a
+                                    href="https://youtu.be/L3rErvUCawY"
+                                    class="featured-btn primary"
+                                    id="featuredWatchBtn"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Watch Now
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -1235,18 +1165,18 @@
                         </div>
                     </div>
 
-                    <div class="episode-card parallax-card">
-                        <div class="episode-thumb parallax-media" style="background-image: url('hq720.jpg');">
+                    <div class="episode-card parallax-card" id="episode2-card">
+                        <div class="episode-thumb parallax-media" style="background-image: url('episode2-thumb.png');">
                             <div class="thumb-shine"></div>
                             <div class="thumb-label">EPISODE PREVIEW</div>
                         </div>
 
                         <div class="episode-body parallax-content">
-                            <h3>Episode #2: Coming Soon!!!</h3>
+                            <h3>Episode #2: Triple T</h3>
                             <div class="episode-runtime">Runtime: TBA</div>
                             <p class="episode-date" id="ep2-date"></p>
                             <div class="episode-info">
-                                <p>COMING SOON</p>
+                                <p id="ep2-info-text">COMING SOON</p>
                             </div>
                         </div>
                     </div>
@@ -1267,7 +1197,7 @@
                         <div class="support-icon">🔴</div>
                         <h3>Follow the Project</h3>
                         <p>Stay updated as new episodes release through T.I.M.E.S.</p>
-                        <a href="https://www.instagram.com/timespodcasts/" class="support-btn">Follow</a>
+                        <a href="https://www.instagram.com/timespodcasts/" class="support-btn" target="_blank" rel="noopener noreferrer">Follow</a>
                     </div>
 
                     <div class="support-card">
@@ -1281,7 +1211,7 @@
                         <div class="support-icon">✉</div>
                         <h3>Contact Us</h3>
                         <p>Reach out with thoughts through our social media!</p>
-                        <a href="https://www.instagram.com/timespodcasts/" class="support-btn">Contact</a>
+                        <a href="https://www.instagram.com/timespodcasts/" class="support-btn" target="_blank" rel="noopener noreferrer">Contact</a>
                     </div>
                 </div>
             </div>
@@ -1291,16 +1221,28 @@
             <div class="footer-left">
                 <span>The New Lang Times © 2026</span>
             </div>
+
             <div class="footer-right">
-                <a href="https://www.instagram.com/timespodcasts/"><span class="footer-icon">◉</span>Instagram</a>
-                <a href="https://youtu.be/L3rErvUCawY"><span class="footer-icon">▶</span>YouTube</a>
-                <a href="https://www.instagram.com/timespodcasts/"><span class="footer-icon">✉</span>Contact</a>
+                <a href="https://www.instagram.com/timespodcasts/" target="_blank" rel="noopener noreferrer"><span class="footer-icon">◉</span>Instagram</a>
+                <a href="https://youtu.be/L3rErvUCawY" target="_blank" rel="noopener noreferrer"><span class="footer-icon">▶</span>YouTube</a>
+                <a href="https://www.instagram.com/timespodcasts/" target="_blank" rel="noopener noreferrer"><span class="footer-icon">✉</span>Contact</a>
             </div>
         </footer>
 
     </div>
 
     <script>
+        const EPISODE_1_LINK = "https://youtu.be/L3rErvUCawY";
+        const EPISODE_2_LINK = "#"; // replace this with Episode 2's YouTube link when you have it
+
+        let currentFeaturedLink = EPISODE_1_LINK;
+
+        function openFeaturedEpisode() {
+            if (currentFeaturedLink && currentFeaturedLink !== "#") {
+                window.open(currentFeaturedLink, "_blank");
+            }
+        }
+
         function formatTimeUnit(value) {
             return value < 10 ? "0" + value : value;
         }
@@ -1318,35 +1260,61 @@
 
         function updateCountdown() {
             const episode1Release = new Date("2026-04-15T23:59:59");
-            const episode2Release = new Date("2026-04-22T23:59:59");
+
+            // Episode 2 releases at midnight going into April 30, 2026
+            const episode2Release = new Date("2026-04-30T00:00:00");
+
             const now = new Date();
 
             const countdownTitle = document.getElementById("countdownTitle");
             const mainCountdown = document.getElementById("countdown");
             const ep1DateText = document.getElementById("ep1DateText");
+            const ep2DateText = document.getElementById("ep2-date");
             const featuredMetaText = document.getElementById("featuredMetaText");
 
-            if (now < episode1Release) {
-                const diff1 = episode1Release - now;
-                const str1 = formatCountdown(diff1);
+            const featuredTitle = document.getElementById("featuredTitle");
+            const featuredDesc = document.getElementById("featuredDesc");
+            const featuredThumb = document.getElementById("featuredThumb");
+            const featuredWatchBtn = document.getElementById("featuredWatchBtn");
+            const ep2InfoText = document.getElementById("ep2-info-text");
 
-                countdownTitle.innerText = "Get with the T.I.M.E.S.";
-                mainCountdown.innerText = str1;
-                ep1DateText.innerHTML = `Available in <span id="ep1-timer">${str1}</span>`;
-                featuredMetaText.innerHTML = `Available in <span id="featured-ep1-timer">${str1}</span>`;
-            } else if (now < episode2Release) {
+            if (now < episode2Release) {
                 const diff2 = episode2Release - now;
                 const str2 = formatCountdown(diff2);
 
                 countdownTitle.innerText = "Next Episode In";
                 mainCountdown.innerText = str2;
+
                 ep1DateText.innerHTML = outNowHTML();
+                ep2DateText.innerHTML = `Available in <span id="ep2-timer">${str2}</span>`;
                 featuredMetaText.innerHTML = outNowHTML();
+
+                featuredTitle.innerText = "Episode #1: Melania Trump";
+                featuredDesc.innerText =
+                    "They're in the cave... they're in our universities... they're EVERYWHERE! Join co-hosts Isaac and Shayaan as they discuss the blindness permeating society, the untruths. Is it all a facet of human nature? Can the youth be protected? Drop into episode 1 to find out what T.I.M.E.S. has to say about it all.";
+
+                featuredThumb.style.backgroundImage = "url('content.png')";
+                featuredWatchBtn.href = EPISODE_1_LINK;
+                currentFeaturedLink = EPISODE_1_LINK;
+
+                ep2InfoText.innerText = "COMING SOON";
             } else {
                 countdownTitle.innerText = "Latest Episode";
                 mainCountdown.innerHTML = outNowHTML();
+
                 ep1DateText.innerHTML = outNowHTML();
+                ep2DateText.innerHTML = outNowHTML();
                 featuredMetaText.innerHTML = outNowHTML();
+
+                featuredTitle.innerText = "Episode #2: Triple T";
+                featuredDesc.innerText =
+                    "Episode 2 is officially live. Watch Triple T now and keep up with the T.I.M.E.S.";
+
+                featuredThumb.style.backgroundImage = "url('episode2-thumb.png')";
+                featuredWatchBtn.href = EPISODE_2_LINK;
+                currentFeaturedLink = EPISODE_2_LINK;
+
+                ep2InfoText.innerText = "OUT NOW!!!";
             }
         }
 
@@ -1354,12 +1322,7 @@
         setInterval(updateCountdown, 1000);
 
         function setEpisodeDates() {
-            const now = new Date();
-            const ep2 = new Date(now);
-            ep2.setDate(now.getDate() + 7);
-
-            document.getElementById("ep2-date").innerText =
-                "Releases: " + ep2.toDateString();
+            document.getElementById("ep2-date").innerText = "Releases: Thu Apr 30 2026";
         }
 
         setEpisodeDates();
@@ -1448,6 +1411,7 @@
         }
 
         window.addEventListener("scroll", handleScroll);
+
         window.addEventListener("load", () => {
             handleScroll();
             revealSections();
@@ -1489,6 +1453,7 @@
         });
 
         let featuredSeen = false;
+
         const featuredObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !featuredSeen) {
