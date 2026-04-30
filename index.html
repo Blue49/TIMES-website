@@ -290,50 +290,46 @@
         }
 
         .latest-ticker {
-            position: sticky;
-            top: 58px;
-            z-index: 45;
-            height: 34px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            background: rgba(10, 0, 0, 0.55);
-            border-bottom: 1px solid rgba(255, 70, 70, 0.12);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 22px rgba(0,0,0,0.18);
-        }
+    position: sticky;
+    top: 58px;
+    z-index: 45;
+    height: 34px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: rgba(10, 0, 0, 0.55);
+    border-bottom: 1px solid rgba(255, 70, 70, 0.12);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+}
 
-        .ticker-track {
-            display: flex;
-            width: max-content;
-            animation: tickerScroll 23s linear infinite;
-        }
+.ticker-track {
+    display: flex;
+    width: max-content;
+    animation: tickerScroll 24s linear infinite;
+}
 
-        .ticker-content {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            padding-right: 18px;
-            white-space: nowrap;
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: rgba(255,255,255,0.78);
-            text-transform: uppercase;
-        }
+.ticker-content {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-right: 60px;
+    white-space: nowrap;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.78);
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
 
-        .ticker-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: rgba(255,70,70,1);
-            box-shadow: 0 0 10px rgba(255,60,60,0.9);
-            flex-shrink: 0;
-        }
-
-        @keyframes tickerScroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
+@keyframes tickerScroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
 
         .hero {
             min-height: 100vh;
