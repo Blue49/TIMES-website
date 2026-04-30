@@ -25,7 +25,11 @@
             height: 300px;
         }
 
-        a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card {
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card, .modal-close, .trailer-overlay-btn {
             cursor: none;
         }
 
@@ -40,6 +44,84 @@
             opacity: 1;
             transform: translateY(0) scale(1);
             transition: opacity 1.2s ease, transform 1.2s ease;
+        }
+
+        .site-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at center, rgba(120, 0, 0, 0.38), transparent 42%),
+                linear-gradient(135deg, #030000 0%, #110101 45%, #000 100%);
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+        }
+
+        .site-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-inner {
+            text-align: center;
+            transform: translateY(10px);
+            animation: loaderFloat 2.6s ease-in-out infinite;
+        }
+
+        .loader-title {
+            font-family: "Inter", sans-serif;
+            font-size: clamp(34px, 7vw, 78px);
+            letter-spacing: 7px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #ff5a5a, #fff);
+            background-size: 240% 240%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            animation: titleGradientShift 5s linear infinite;
+            filter: drop-shadow(0 0 18px rgba(255, 50, 50, 0.2));
+        }
+
+        .loader-subtitle {
+            margin-top: 18px;
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.66);
+            text-transform: uppercase;
+        }
+
+        .loader-bar {
+            width: 260px;
+            height: 4px;
+            margin: 28px auto 0;
+            border-radius: 999px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .loader-bar::before {
+            content: "";
+            display: block;
+            height: 100%;
+            width: 45%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, rgba(255,40,40,0), rgba(255,80,80,0.95), rgba(255,255,255,0.8));
+            animation: loaderSweep 1.3s ease-in-out infinite;
+        }
+
+        @keyframes loaderFloat {
+            0%, 100% { transform: translateY(10px); }
+            50% { transform: translateY(0); }
+        }
+
+        @keyframes loaderSweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(240%); }
         }
 
         .bg-container {
@@ -207,6 +289,52 @@
             pointer-events: none;
         }
 
+        .latest-ticker {
+            position: sticky;
+            top: 58px;
+            z-index: 45;
+            height: 34px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            background: rgba(10, 0, 0, 0.55);
+            border-bottom: 1px solid rgba(255, 70, 70, 0.12);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+        }
+
+        .ticker-track {
+            display: flex;
+            width: max-content;
+            animation: tickerScroll 23s linear infinite;
+        }
+
+        .ticker-content {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding-right: 18px;
+            white-space: nowrap;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.78);
+            text-transform: uppercase;
+        }
+
+        .ticker-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255,70,70,1);
+            box-shadow: 0 0 10px rgba(255,60,60,0.9);
+            flex-shrink: 0;
+        }
+
+        @keyframes tickerScroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
         .hero {
             min-height: 100vh;
             display: flex;
@@ -322,8 +450,51 @@
             50% { border-color: transparent; }
         }
 
+        .audio-waveform {
+            margin: 30px auto 0;
+            height: 54px;
+            width: min(420px, 90vw);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            opacity: 0.88;
+            pointer-events: none;
+        }
+
+        .audio-waveform span {
+            width: 4px;
+            height: 16px;
+            border-radius: 999px;
+            background: linear-gradient(to top, rgba(255,45,45,0.28), rgba(255,255,255,0.75));
+            box-shadow: 0 0 14px rgba(255,55,55,0.18);
+            animation: waveBounce 1.15s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .audio-waveform span:nth-child(2) { animation-delay: 0.08s; }
+        .audio-waveform span:nth-child(3) { animation-delay: 0.16s; }
+        .audio-waveform span:nth-child(4) { animation-delay: 0.24s; }
+        .audio-waveform span:nth-child(5) { animation-delay: 0.32s; }
+        .audio-waveform span:nth-child(6) { animation-delay: 0.40s; }
+        .audio-waveform span:nth-child(7) { animation-delay: 0.48s; }
+        .audio-waveform span:nth-child(8) { animation-delay: 0.56s; }
+        .audio-waveform span:nth-child(9) { animation-delay: 0.64s; }
+        .audio-waveform span:nth-child(10) { animation-delay: 0.72s; }
+        .audio-waveform span:nth-child(11) { animation-delay: 0.80s; }
+        .audio-waveform span:nth-child(12) { animation-delay: 0.88s; }
+        .audio-waveform span:nth-child(13) { animation-delay: 0.96s; }
+        .audio-waveform span:nth-child(14) { animation-delay: 1.04s; }
+        .audio-waveform span:nth-child(15) { animation-delay: 1.12s; }
+
+        @keyframes waveBounce {
+            0%, 100% { height: 12px; opacity: 0.42; }
+            45% { height: 46px; opacity: 1; }
+            70% { height: 22px; opacity: 0.72; }
+        }
+
         .countdown-title {
-            margin-top: 60px;
+            margin-top: 42px;
             font-size: 18px;
             letter-spacing: 2px;
             font-family: "Inter", sans-serif;
@@ -360,7 +531,7 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 120px 24px;
-            scroll-margin-top: 90px;
+            scroll-margin-top: 130px;
             opacity: 0;
             transform: translateY(36px);
             transition: opacity 0.85s ease, transform 0.85s ease;
@@ -693,6 +864,29 @@
             pointer-events: none;
         }
 
+        .trailer-overlay-btn {
+            position: absolute;
+            right: 14px;
+            bottom: 12px;
+            z-index: 5;
+            border: none;
+            border-radius: 999px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,0.94);
+            background: rgba(0,0,0,0.34);
+            border: 1px solid rgba(255,255,255,0.16);
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            font-size: 11px;
+            backdrop-filter: blur(8px);
+            transition: transform 0.26s ease, background 0.26s ease;
+        }
+
+        .trailer-overlay-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255,60,60,0.18);
+        }
+
         .episodes-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -985,16 +1179,175 @@
             transform: translateY(-1px);
         }
 
+        .episode-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .episode-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.72);
+            backdrop-filter: blur(12px);
+        }
+
+        .modal-card {
+            position: relative;
+            width: min(900px, 94vw);
+            max-height: 88vh;
+            overflow: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            background: rgba(16, 2, 2, 0.92);
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 28px;
+            box-shadow:
+                0 28px 100px rgba(0,0,0,0.55),
+                0 0 44px rgba(255,50,50,0.12);
+            overflow: hidden;
+            transform: translateY(24px) scale(0.96);
+            transition: transform 0.35s ease;
+        }
+
+        .episode-modal.open .modal-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-thumb {
+            min-height: 390px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .modal-thumb::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.58)),
+                radial-gradient(circle at center, rgba(255,70,70,0.18), transparent 62%);
+        }
+
+        .modal-content {
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .modal-kicker {
+            font-size: 12px;
+            letter-spacing: 2.4px;
+            color: rgba(255,255,255,0.58);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 38px;
+            line-height: 1.12;
+            font-family: "Inter", sans-serif;
+        }
+
+        .modal-meta {
+            margin-top: 14px;
+            font-size: 13px;
+            letter-spacing: 1.2px;
+            color: rgba(255,255,255,0.58);
+            text-transform: uppercase;
+        }
+
+        .modal-desc {
+            margin-top: 22px;
+            font-size: 16px;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.78);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .modal-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 13px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            border: 1px solid rgba(255,110,110,0.24);
+            background: linear-gradient(90deg, rgba(255,50,50,0.22), rgba(255,85,85,0.13));
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 24px rgba(255,55,55,0.15);
+        }
+
+        .modal-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 3;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(0,0,0,0.35);
+            color: rgba(255,255,255,0.9);
+            font-size: 24px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg) scale(1.04);
+            background: rgba(255,60,60,0.18);
+        }
+
         @media (max-width: 900px) {
             .featured-episode { grid-template-columns: 1fr; }
             .featured-content { padding: 0 28px 28px 28px; }
             .support-grid { grid-template-columns: 1fr; }
+            .modal-card { grid-template-columns: 1fr; }
+            .modal-thumb { min-height: 260px; }
         }
 
         @media (max-width: 768px) {
             body { cursor: default; }
 
-            a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card {
+            a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card, .modal-close, .trailer-overlay-btn {
                 cursor: pointer;
             }
 
@@ -1037,6 +1390,7 @@
 
             .navbar { padding: 16px 20px; }
             .nav-links { gap: 22px; }
+            .latest-ticker { top: 100px; }
 
             .site-footer {
                 flex-direction: column;
@@ -1047,6 +1401,14 @@
 </head>
 
 <body class="page-loading">
+
+    <div class="site-loader" id="siteLoader">
+        <div class="loader-inner">
+            <div class="loader-title">T.I.M.E.S</div>
+            <div class="loader-subtitle">Getting with the T.I.M.E.S...</div>
+            <div class="loader-bar"></div>
+        </div>
+    </div>
 
     <div class="bg-container">
         <div class="bg-layer bg1" id="bg1"></div>
@@ -1070,12 +1432,33 @@
             </div>
         </div>
 
+        <div class="latest-ticker" aria-label="Latest updates">
+            <div class="ticker-track">
+                <div class="ticker-content">
+                    <span class="ticker-dot"></span><span id="tickerTextOne">LATEST: Episode #2: Triple T — OUT NOW</span>
+                    <span class="ticker-dot"></span><span>Follow @timespodcasts</span>
+                    <span class="ticker-dot"></span><span>Are you ready to get with the T.I.M.E.S?</span>
+                </div>
+                <div class="ticker-content">
+                    <span class="ticker-dot"></span><span id="tickerTextTwo">LATEST: Episode #2: Triple T — OUT NOW</span>
+                    <span class="ticker-dot"></span><span>Follow @timespodcasts</span>
+                    <span class="ticker-dot"></span><span>Are you ready to get with the T.I.M.E.S?</span>
+                </div>
+            </div>
+        </div>
+
         <section class="hero" id="home">
             <div class="hero-aura"></div>
 
             <div class="hero-inner" id="heroInner">
                 <h1>T.I.M.E.S</h1>
                 <p><span class="hero-tagline">Are you ready to get with the T.I.M.E.S?</span></p>
+
+                <div class="audio-waveform" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
 
                 <div class="countdown-title" id="countdownTitle">Get with the T.I.M.E.S.</div>
 
@@ -1143,6 +1526,7 @@
                                 >
                                     Watch Now
                                 </a>
+                                <a href="#" class="featured-btn primary" id="featuredTrailerBtn">Preview</a>
                             </div>
                         </div>
                     </div>
@@ -1150,16 +1534,15 @@
 
                 <div class="episodes-grid">
                     <div class="episode-card parallax-card" id="episode1-card">
-                        <a
-                            href="https://youtu.be/L3rErvUCawY"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <div
                             class="episode-thumb parallax-media"
                             style="background-image: url('content.png'); display: block;"
+                            data-episode="1"
                         >
                             <div class="thumb-shine"></div>
                             <div class="thumb-label">EPISODE PREVIEW</div>
-                        </a>
+                            <button class="trailer-overlay-btn" data-episode="1">PREVIEW</button>
+                        </div>
 
                         <div class="episode-body parallax-content">
                             <h3>Episode #1: Melania Trump</h3>
@@ -1172,16 +1555,15 @@
                     </div>
 
                     <div class="episode-card parallax-card" id="episode2-card">
-                        <a
-                            href="#"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <div
                             class="episode-thumb parallax-media"
                             style="background-image: url('9k.png'); display: block;"
+                            data-episode="2"
                         >
                             <div class="thumb-shine"></div>
                             <div class="thumb-label">EPISODE PREVIEW</div>
-                        </a>
+                            <button class="trailer-overlay-btn" data-episode="2">PREVIEW</button>
+                        </div>
 
                         <div class="episode-body parallax-content">
                             <h3>Episode #2: Triple T</h3>
@@ -1243,16 +1625,51 @@
 
     </div>
 
+    <div class="episode-modal" id="episodeModal" aria-hidden="true">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalClose" aria-label="Close episode preview">×</button>
+            <div class="modal-thumb" id="modalThumb"></div>
+            <div class="modal-content">
+                <div class="modal-kicker" id="modalKicker">Episode Preview</div>
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <div class="modal-meta" id="modalMeta"></div>
+                <p class="modal-desc" id="modalDesc"></p>
+                <div class="modal-actions">
+                    <a href="#" class="modal-btn" id="modalWatchBtn" target="_blank" rel="noopener noreferrer">Watch Episode</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const EPISODE_1_LINK = "https://youtu.be/L3rErvUCawY";
         const EPISODE_2_LINK = "#";
 
+        const episodeData = {
+            1: {
+                title: "Episode #1: Melania Trump",
+                image: "content.png",
+                runtime: "Runtime: 15 min",
+                status: "Released: 4/8/26",
+                link: EPISODE_1_LINK,
+                desc: "They're in the cave... they're in our universities... they're EVERYWHERE! Join co-hosts Isaac and Shayaan as they discuss the blindness permeating society, the untruths. Is it all a facet of human nature? Can the youth be protected? Drop into episode 1 to find out what T.I.M.E.S. has to say about it all."
+            },
+            2: {
+                title: "Episode #2: Triple T",
+                image: "9k.png",
+                runtime: "Runtime: TBA",
+                status: "Out Now",
+                link: EPISODE_2_LINK,
+                desc: "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast."
+            }
+        };
+
         let currentFeaturedLink = EPISODE_1_LINK;
+        let currentFeaturedEpisode = 1;
 
         function openFeaturedEpisode() {
-            if (currentFeaturedLink && currentFeaturedLink !== "#") {
-                window.open(currentFeaturedLink, "_blank");
-            }
+            openEpisodeModal(currentFeaturedEpisode);
         }
 
         function formatTimeUnit(value) {
@@ -1268,6 +1685,11 @@
 
         function outNowHTML() {
             return '<span class="live-indicator"><span class="live-dot"></span>OUT NOW!</span>';
+        }
+
+        function updateTicker(text) {
+            document.getElementById("tickerTextOne").innerText = text;
+            document.getElementById("tickerTextTwo").innerText = text;
         }
 
         function updateCountdown() {
@@ -1297,15 +1719,16 @@
                 ep2DateText.innerHTML = `Available in <span id="ep2-timer">${str2}</span>`;
                 featuredMetaText.innerHTML = outNowHTML();
 
-                featuredTitle.innerText = "Episode #1: Melania Trump";
-                featuredDesc.innerText =
-                    "They're in the cave... they're in our universities... they're EVERYWHERE! Join co-hosts Isaac and Shayaan as they discuss the blindness permeating society, the untruths. Is it all a facet of human nature? Can the youth be protected? Drop into episode 1 to find out what T.I.M.E.S. has to say about it all.";
+                featuredTitle.innerText = episodeData[1].title;
+                featuredDesc.innerText = episodeData[1].desc;
 
                 featuredThumb.style.backgroundImage = "url('content.png')";
                 featuredWatchBtn.href = EPISODE_1_LINK;
                 currentFeaturedLink = EPISODE_1_LINK;
+                currentFeaturedEpisode = 1;
 
                 ep2InfoText.innerText = "COMING SOON";
+                updateTicker(`NEXT: Episode #2: Triple T — ${str2}`);
             } else {
                 countdownTitle.innerText = "Latest Episode";
                 mainCountdown.innerHTML = outNowHTML();
@@ -1314,15 +1737,16 @@
                 ep2DateText.innerHTML = outNowHTML();
                 featuredMetaText.innerHTML = outNowHTML();
 
-                featuredTitle.innerText = "Episode #2: Triple T";
-                featuredDesc.innerText =
-                    "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, bond overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast.";
+                featuredTitle.innerText = episodeData[2].title;
+                featuredDesc.innerText = episodeData[2].desc;
 
                 featuredThumb.style.backgroundImage = "url('9k.png')";
                 featuredWatchBtn.href = EPISODE_2_LINK;
                 currentFeaturedLink = EPISODE_2_LINK;
+                currentFeaturedEpisode = 2;
 
                 ep2InfoText.innerText = "OUT NOW!!!";
+                updateTicker("LATEST: Episode #2: Triple T — OUT NOW");
             }
         }
 
@@ -1334,6 +1758,65 @@
         }
 
         setEpisodeDates();
+
+        const episodeModal = document.getElementById("episodeModal");
+        const modalBackdrop = document.getElementById("modalBackdrop");
+        const modalClose = document.getElementById("modalClose");
+        const modalThumb = document.getElementById("modalThumb");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalMeta = document.getElementById("modalMeta");
+        const modalDesc = document.getElementById("modalDesc");
+        const modalWatchBtn = document.getElementById("modalWatchBtn");
+        const featuredTrailerBtn = document.getElementById("featuredTrailerBtn");
+
+        function openEpisodeModal(episodeNumber) {
+            const episode = episodeData[episodeNumber];
+            if (!episode) return;
+
+            modalThumb.style.backgroundImage = `url('${episode.image}')`;
+            modalTitle.innerText = episode.title;
+            modalMeta.innerText = `${episode.runtime} • ${episode.status}`;
+            modalDesc.innerText = episode.desc;
+            modalWatchBtn.href = episode.link;
+
+            if (!episode.link || episode.link === "#") {
+                modalWatchBtn.classList.add("disabled");
+                modalWatchBtn.innerText = "Link Coming Soon";
+            } else {
+                modalWatchBtn.classList.remove("disabled");
+                modalWatchBtn.innerText = "Watch Episode";
+            }
+
+            episodeModal.classList.add("open");
+            episodeModal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("modal-open");
+        }
+
+        function closeEpisodeModal() {
+            episodeModal.classList.remove("open");
+            episodeModal.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("modal-open");
+        }
+
+        document.querySelectorAll("[data-episode]").forEach(item => {
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+                const episodeNumber = Number(item.dataset.episode);
+                openEpisodeModal(episodeNumber);
+            });
+        });
+
+        featuredTrailerBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openEpisodeModal(currentFeaturedEpisode);
+        });
+
+        modalBackdrop.addEventListener("click", closeEpisodeModal);
+        modalClose.addEventListener("click", closeEpisodeModal);
+
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeEpisodeModal();
+        });
 
         const navLinks = document.querySelectorAll(".nav-link");
         const sections = document.querySelectorAll("section[id]");
@@ -1406,7 +1889,7 @@
             let currentSection = "home";
 
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 120;
+                const sectionTop = section.offsetTop - 150;
                 const sectionHeight = section.offsetHeight;
 
                 if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
@@ -1425,9 +1908,10 @@
             revealSections();
             moveNavIndicatorTo(document.querySelector(".nav-link.active"));
 
-            requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.getElementById("siteLoader").classList.add("hidden");
                 document.body.classList.remove("page-loading");
-            });
+            }, 850);
         });
 
         window.addEventListener("resize", () => {
@@ -1505,7 +1989,7 @@
         });
 
         const hoverTargets = document.querySelectorAll(
-            "a, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card"
+            "a, button, .episode-card, .countdown-box, .support-btn, .featured-episode, .support-card"
         );
 
         hoverTargets.forEach(item => {
