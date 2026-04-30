@@ -304,18 +304,18 @@
         }
 
         .hero-tagline {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 0;
-    border-right: 2px solid rgba(255,255,255,0.65);
-    animation: typeReveal 3s steps(42, end) 0.35s forwards, blinkCaret 0.8s step-end infinite;
-}
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 0;
+            border-right: 2px solid rgba(255,255,255,0.65);
+            animation: typeReveal 3s steps(42, end) 0.35s forwards, blinkCaret 0.8s step-end infinite;
+        }
 
-@keyframes typeReveal {
-    from { max-width: 0; }
-    to { max-width: 42ch; }
-}
+        @keyframes typeReveal {
+            from { max-width: 0; }
+            to { max-width: 39ch; }
+        }
 
         @keyframes blinkCaret {
             0%, 100% { border-color: rgba(255,255,255,0.65); }
@@ -1233,7 +1233,7 @@
 
     <script>
         const EPISODE_1_LINK = "https://youtu.be/L3rErvUCawY";
-        const EPISODE_2_LINK = "#"; // replace this with Episode 2's YouTube link when you have it
+        const EPISODE_2_LINK = "#";
 
         let currentFeaturedLink = EPISODE_1_LINK;
 
@@ -1259,11 +1259,7 @@
         }
 
         function updateCountdown() {
-            const episode1Release = new Date("2026-04-15T23:59:59");
-
-            // Episode 2 releases at midnight going into April 30, 2026
             const episode2Release = new Date("2026-04-30T00:00:00");
-
             const now = new Date();
 
             const countdownTitle = document.getElementById("countdownTitle");
@@ -1302,13 +1298,13 @@
                 countdownTitle.innerText = "Latest Episode";
                 mainCountdown.innerHTML = outNowHTML();
 
-                ep1DateText.innerHTML = outNowHTML();
+                ep1DateText.innerText = "Released: 4/8/26";
                 ep2DateText.innerHTML = outNowHTML();
                 featuredMetaText.innerHTML = outNowHTML();
 
                 featuredTitle.innerText = "Episode #2: Triple T";
-                featuredDesc.innerText = "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, bond overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast.";
-                    "Episode 2 is officially live. Watch Triple T now and keep up with the T.I.M.E.S.";
+                featuredDesc.innerText =
+                    "As the AI apocalypse approaches, the fate of humanity rests on the shoulders of two unlikely heroes. These unlikely heroes, and even more unlikely friends, bond overcome their differences to become humanity's last hope. Will they defeat their AI overlords or will they succumb to the temptations that the robots offer? Find out in this episode of TIMES Podcast.";
 
                 featuredThumb.style.backgroundImage = "url('9k.png')";
                 featuredWatchBtn.href = EPISODE_2_LINK;
@@ -1429,18 +1425,17 @@
 
         const countdownBox = document.getElementById("homeCountdownBox");
         const episodesSection = document.getElementById("episodes");
-        const episode1Card = document.getElementById("episode1-card");
         const featuredEpisode = document.getElementById("featuredEpisode");
 
         countdownBox.addEventListener("click", () => {
             episodesSection.scrollIntoView({ behavior: "smooth", block: "start" });
             setActiveLink("episodes");
-        
+
             setTimeout(() => {
                 featuredEpisode.classList.remove("featured-flash");
                 void featuredEpisode.offsetWidth;
                 featuredEpisode.classList.add("featured-flash");
-        
+
                 setTimeout(() => {
                     featuredEpisode.classList.remove("featured-flash");
                 }, 1000);
