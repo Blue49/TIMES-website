@@ -2093,19 +2093,32 @@ function setActiveLink(id) {
 }
 
 navLinks.forEach(link => {
-    link.addEventListener("click", function() {
+    link.addEventListener("click", function(e) {
+        e.preventDefault();
+
         const targetId = this.getAttribute("href").substring(1);
+        const targetSection = document.getElementById(targetId);
+
+        if (!targetSection) return;
 
         navClickLocked = true;
         lockedNavTarget = targetId;
 
         setActiveLink(targetId);
 
+        const offset = 120;
+        const y = targetSection.getBoundingClientRect().top + window.scrollY - offset;
+
+        window.scrollTo({
+            top: y,
+            behavior: "smooth"
+        });
+
         setTimeout(() => {
             navClickLocked = false;
             lockedNavTarget = null;
-            handleScroll();
-        }, 1000);
+            setActiveLink(targetId);
+        }, 1100);
     });
 });
 
@@ -2165,12 +2178,12 @@ function handleScroll() {
     });
 
     if (navClickLocked && lockedNavTarget) {
-        setActiveLink(lockedNavTarget);
-    } else {
-        setActiveLink(currentSection);
-    }
-
     revealSections();
+    return;
+}
+
+setActiveLink(currentSection);
+revealSections();
 }
 
     window.addEventListener("scroll", handleScroll);
