@@ -2067,103 +2067,111 @@
     });
 
     const navLinks = document.querySelectorAll(".nav-link");
-    const sections = document.querySelectorAll("section[id]");
-    const pageSections = document.querySelectorAll(".page-section");
-    const navIndicator = document.getElementById("navIndicator");
-    const bg1 = document.getElementById("bg1");
-    const navbar = document.querySelector(".navbar");
+const sections = document.querySelectorAll("section[id]");
+const pageSections = document.querySelectorAll(".page-section");
+const navIndicator = document.getElementById("navIndicator");
+const bg1 = document.getElementById("bg1");
+const navbar = document.querySelector(".navbar");
 
-    let navClickLocked = false;
+let navClickLocked = false;
+let lockedNavTarget = null;
 
-    function moveNavIndicatorTo(link) {
-        if (!link) return;
-        navIndicator.style.width = `${link.offsetWidth}px`;
-        navIndicator.style.left = `${link.offsetLeft}px`;
-    }
+function moveNavIndicatorTo(link) {
+    if (!link) return;
+    navIndicator.style.width = `${link.offsetWidth}px`;
+    navIndicator.style.left = `${link.offsetLeft}px`;
+}
 
-    function setActiveLink(id) {
-        navLinks.forEach(link => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${id}`) {
-                link.classList.add("active");
-                moveNavIndicatorTo(link);
-            }
-        });
-    }
-
+function setActiveLink(id) {
     navLinks.forEach(link => {
-        link.addEventListener("click", function() {
-            const targetId = this.getAttribute("href").substring(1);
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${id}`) {
+            link.classList.add("active");
+            moveNavIndicatorTo(link);
+        }
+    });
+}
 
-            navClickLocked = true;
-            setActiveLink(targetId);
+navLinks.forEach(link => {
+    link.addEventListener("click", function() {
+        const targetId = this.getAttribute("href").substring(1);
 
-            setTimeout(() => {
-                navClickLocked = false;
-                handleScroll();
-            }, 700);
-        });
+        navClickLocked = true;
+        lockedNavTarget = targetId;
+
+        setActiveLink(targetId);
+
+        setTimeout(() => {
+            navClickLocked = false;
+            lockedNavTarget = null;
+            handleScroll();
+        }, 1000);
+    });
+});
+
+function revealSections() {
+    const triggerTop = window.innerHeight * 0.12;
+    const triggerBottom = window.innerHeight * 0.88;
+
+    pageSections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const isVisible = rect.top < triggerBottom && rect.bottom > triggerTop;
+
+        if (isVisible) {
+            section.classList.add("visible");
+        } else {
+            section.classList.remove("visible");
+        }
+    });
+}
+
+function handleScroll() {
+    const scrollY = window.scrollY;
+
+    const scrollProgress = document.getElementById("scrollProgress");
+    const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progressPercent = (scrollY / pageHeight) * 100;
+
+    if (scrollProgress) {
+        scrollProgress.style.width = `${progressPercent}%`;
+    }
+
+    if (scrollY > 40) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
+    }
+
+    const hero = document.getElementById("home");
+    const progress = Math.min(scrollY / (hero.offsetHeight * 1.2), 1);
+
+    document.getElementById("heroInner").style.transform = `translateY(${-scrollY * 0.45}px)`;
+    document.getElementById("heroInner").style.opacity = 1 - progress;
+    document.getElementById("bg2").style.opacity = progress * 0.82;
+
+    const bgScale = 1 + (progress * 0.08);
+    const bgShift = scrollY * 0.02;
+    bg1.style.transform = `scale(${bgScale}) translateY(${bgShift}px)`;
+
+    let currentSection = "home";
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150;
+        const sectionHeight = section.offsetHeight;
+
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            currentSection = section.getAttribute("id");
+        }
     });
 
-    function revealSections() {
-        const triggerTop = window.innerHeight * 0.12;
-        const triggerBottom = window.innerHeight * 0.88;
-
-        pageSections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            const isVisible = rect.top < triggerBottom && rect.bottom > triggerTop;
-
-            if (isVisible) {
-                section.classList.add("visible");
-            } else {
-                section.classList.remove("visible");
-            }
-        });
+    if (navClickLocked && lockedNavTarget) {
+        setActiveLink(lockedNavTarget);
+    } else {
+        setActiveLink(currentSection);
     }
 
-    function handleScroll() {
-        const scrollY = window.scrollY;
-        const scrollProgress = document.getElementById("scrollProgress");
-const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-const progressPercent = (scrollY / pageHeight) * 100;
-
-if (scrollProgress) {
-    scrollProgress.style.width = `${progressPercent}%`;
+    revealSections();
 }
-
-        if (scrollY > 40) {
-            navbar.classList.add("scrolled");
-        } else {
-            navbar.classList.remove("scrolled");
-        }
-
-        const hero = document.getElementById("home");
-        const progress = Math.min(scrollY / (hero.offsetHeight * 1.2), 1);
-
-        document.getElementById("heroInner").style.transform = `translateY(${-scrollY * 0.45}px)`;
-        document.getElementById("heroInner").style.opacity = 1 - progress;
-        document.getElementById("bg2").style.opacity = progress * 0.82;
-
-        const bgScale = 1 + (progress * 0.08);
-        const bgShift = scrollY * 0.02;
-        bg1.style.transform = `scale(${bgScale}) translateY(${bgShift}px)`;
-
-        let currentSection = "home";
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 150;
-            const sectionHeight = section.offsetHeight;
-
-            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                currentSection = section.getAttribute("id");
-            }
-        });
-
-        if (!navClickLocked) {
-    setActiveLink(currentSection);
-}
-        revealSections();
-    }
 
     window.addEventListener("scroll", handleScroll);
 
