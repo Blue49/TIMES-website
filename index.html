@@ -557,48 +557,45 @@
 /* faint full outline so the border never "cuts off" */
 .neon-border-base {
     fill: none;
-    stroke: rgba(255, 45, 45, 0.25);
-    stroke-width: 1.3;
+    stroke: rgba(255, 45, 45, 0.05);
+    stroke-width: 1.1;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter:
-        drop-shadow(0 0 6px rgba(255, 45, 45, 0.55))
-        drop-shadow(0 0 16px rgba(255, 0, 0, 0.25));
+    filter: none;
 }
 
 /* longer faded tail */
 .neon-border-tail {
     fill: none;
-    stroke: rgba(255, 35, 35, 0.55);
-    stroke-width: 1.7;
+    stroke: rgba(255, 35, 35, 0.28);
+    stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
 
-    stroke-dasharray: 330 670;
+    stroke-dasharray: 420 580;
     stroke-dashoffset: 0;
 
     filter:
-        drop-shadow(0 0 8px rgba(255, 45, 45, 0.75))
-        drop-shadow(0 0 24px rgba(255, 0, 0, 0.35));
+        drop-shadow(0 0 10px rgba(255, 45, 45, 0.45))
+        drop-shadow(0 0 26px rgba(255, 0, 0, 0.22));
 
     animation: neonTrace 4.2s linear infinite;
 }
 
-/* bright front part */
 .neon-border-line {
     fill: none;
     stroke: rgba(255, 55, 55, 1);
-    stroke-width: 1.9;
+    stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
 
-    stroke-dasharray: 125 875;
-    stroke-dashoffset: -205;
+    stroke-dasharray: 95 905;
+    stroke-dashoffset: -325;
 
     filter:
         drop-shadow(0 0 6px rgba(255, 60, 60, 1))
-        drop-shadow(0 0 16px rgba(255, 20, 20, 0.9))
-        drop-shadow(0 0 34px rgba(255, 0, 0, 0.55));
+        drop-shadow(0 0 18px rgba(255, 20, 20, 0.75))
+        drop-shadow(0 0 34px rgba(255, 0, 0, 0.35));
 
     animation: neonTraceHead 4.2s linear infinite;
 }
@@ -609,8 +606,8 @@
 }
 
 @keyframes neonTraceHead {
-    from { stroke-dashoffset: -205; }
-    to { stroke-dashoffset: -1205; }
+    from { stroke-dashoffset: -325; }
+    to { stroke-dashoffset: -1325; }
 }
 
 .countdown {
