@@ -547,11 +547,12 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.25s ease;
+    overflow: visible;
     filter:
-        drop-shadow(0 0 5px rgba(255, 35, 35, 1))
-        drop-shadow(0 0 12px rgba(255, 20, 20, 0.9))
-        drop-shadow(0 0 24px rgba(255, 0, 0, 0.65))
-        drop-shadow(0 0 42px rgba(255, 0, 0, 0.35));
+        drop-shadow(0 0 4px rgba(255, 45, 45, 1))
+        drop-shadow(0 0 10px rgba(255, 25, 25, 0.95))
+        drop-shadow(0 0 22px rgba(255, 0, 0, 0.75))
+        drop-shadow(0 0 42px rgba(255, 0, 0, 0.45));
 }
 
 .countdown-box:hover .neon-border {
@@ -561,14 +562,16 @@
 .neon-border-line {
     fill: none;
     stroke: rgba(255, 45, 45, 1);
-    stroke-width: 1.5;
+    stroke-width: 4;
+    vector-effect: non-scaling-stroke;
     stroke-linecap: round;
     stroke-linejoin: round;
 
-    stroke-dasharray: 90 310;
+    /* longer glowing tail */
+    stroke-dasharray: 180 260;
     stroke-dashoffset: 0;
 
-    animation: neonTrace 3.2s linear infinite;
+    animation: neonTrace 3.6s linear infinite;
 }
 
 @keyframes neonTrace {
@@ -577,7 +580,7 @@
     }
 
     to {
-        stroke-dashoffset: -400;
+        stroke-dashoffset: -440;
     }
 }
 
@@ -1520,8 +1523,8 @@
                 <div class="countdown-title" id="countdownTitle">Get with the T.I.M.E.S.</div>
 
                 <div class="countdown-box" id="homeCountdownBox">
-    <svg class="neon-border" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <rect class="neon-border-line" x="1.5" y="1.5" width="97" height="97" rx="4" ry="4" />
+    <svg class="neon-border" viewBox="0 0 100 32" preserveAspectRatio="none">
+        <rect class="neon-border-line" x="2" y="2" width="96" height="28" rx="2.5" ry="2.5" />
     </svg>
 
     <div class="countdown" id="countdown"></div>
