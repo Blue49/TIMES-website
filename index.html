@@ -2113,12 +2113,6 @@ navLinks.forEach(link => {
             top: y,
             behavior: "smooth"
         });
-
-        setTimeout(() => {
-            navClickLocked = false;
-            lockedNavTarget = null;
-            setActiveLink(targetId);
-        }, 1100);
     });
 });
 
@@ -2177,7 +2171,22 @@ function handleScroll() {
         }
     });
 
-    if (navClickLocked && lockedNavTarget) {
+   if (navClickLocked && lockedNavTarget) {
+    setActiveLink(lockedNavTarget);
+
+    const targetSection = document.getElementById(lockedNavTarget);
+    const offset = 120;
+
+    if (targetSection) {
+        const targetY = targetSection.offsetTop - offset;
+        const distance = Math.abs(window.scrollY - targetY);
+
+        if (distance < 12) {
+            navClickLocked = false;
+            lockedNavTarget = null;
+        }
+    }
+
     revealSections();
     return;
 }
