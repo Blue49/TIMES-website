@@ -549,10 +549,10 @@
     transition: opacity 0.25s ease;
     overflow: visible;
     filter:
-        drop-shadow(0 0 4px rgba(255, 45, 45, 1))
-        drop-shadow(0 0 10px rgba(255, 25, 25, 0.95))
-        drop-shadow(0 0 22px rgba(255, 0, 0, 0.75))
-        drop-shadow(0 0 42px rgba(255, 0, 0, 0.45));
+        drop-shadow(0 0 5px rgba(255, 45, 45, 1))
+        drop-shadow(0 0 14px rgba(255, 25, 25, 0.85))
+        drop-shadow(0 0 30px rgba(255, 0, 0, 0.50))
+        drop-shadow(0 0 55px rgba(255, 0, 0, 0.25));
 }
 
 .countdown-box:hover .neon-border {
@@ -567,11 +567,10 @@
     stroke-linecap: round;
     stroke-linejoin: round;
 
-    /* longer glowing tail */
-    stroke-dasharray: 180 260;
+    stroke-dasharray: 135 1000;
     stroke-dashoffset: 0;
 
-    animation: neonTrace 3.6s linear infinite;
+    animation: neonTrace 4s linear infinite;
 }
 
 @keyframes neonTrace {
@@ -580,7 +579,7 @@
     }
 
     to {
-        stroke-dashoffset: -440;
+        stroke-dashoffset: -1135;
     }
 }
 
