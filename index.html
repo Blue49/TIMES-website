@@ -508,116 +508,92 @@
         }
 
         .countdown-title {
-            margin-top: 42px;
-            font-size: 18px;
-            letter-spacing: 2px;
-            font-family: "Inter", sans-serif;
-            color: rgba(255,255,255,0.75);
-        }
-
-        .countdown-box {
-            margin-top: 20px;
-            padding: 30px 50px;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            transition: 0.3s ease;
-            box-shadow: 0 0 0 rgba(255, 40, 40, 0);
-        }
-
-        .countdown-box:hover {
-            transform: translateY(-5px) scale(1.02);
-            background: rgba(255,255,255,0.12);
-            border-color: rgba(255, 95, 95, 0.28);
-            box-shadow:
-                0 0 20px rgba(255, 50, 50, 0.14),
-                0 0 36px rgba(255, 30, 30, 0.10);
-        }
-
-        .countdown {
-            font-size: 72px;
-            font-weight: 600;
-            font-family: "Inter", sans-serif;
-        }
-
-        .countdown-box {
-    position: relative;
-    overflow: hidden;
+    margin-top: 42px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-family: "Inter", sans-serif;
+    color: rgba(255,255,255,0.75);
 }
 
-.countdown-box .border-line {
+.countdown-box {
+    margin-top: 20px;
+    padding: 30px 50px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    transition: 0.3s ease;
+    box-shadow: 0 0 0 rgba(255, 40, 40, 0);
+
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+}
+
+.countdown-box:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255, 95, 95, 0.28);
+    box-shadow:
+        0 0 20px rgba(255, 50, 50, 0.14),
+        0 0 36px rgba(255, 30, 30, 0.10);
+}
+
+.countdown-box::before {
+    content: "";
     position: absolute;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 70, 70, 1),
-        rgba(255, 255, 255, 0.95),
-        transparent
-    );
+    inset: -3px;
+    padding: 3px;
+    border-radius: inherit;
     opacity: 0;
     pointer-events: none;
+
+    background: conic-gradient(
+        from var(--angle),
+        transparent 0deg,
+        transparent 245deg,
+        rgba(255, 40, 40, 0.2) 285deg,
+        rgba(255, 45, 45, 1) 310deg,
+        rgba(255, 255, 255, 0.95) 325deg,
+        rgba(255, 45, 45, 1) 340deg,
+        transparent 360deg
+    );
+
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    filter:
+        drop-shadow(0 0 8px rgba(255, 45, 45, 0.95))
+        drop-shadow(0 0 18px rgba(255, 20, 20, 0.6));
+
     transition: opacity 0.25s ease;
-    box-shadow: 0 0 14px rgba(255, 60, 60, 0.9);
+    animation: neonBorderSpin 1.6s linear infinite;
 }
 
-.countdown-box:hover .border-line {
+.countdown-box:hover::before {
     opacity: 1;
 }
 
-.countdown-box .top-line {
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    animation: moveTop 1.8s linear infinite;
+.countdown {
+    font-size: 72px;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+    position: relative;
+    z-index: 2;
 }
 
-.countdown-box .right-line {
-    top: 0;
-    right: 0;
-    width: 3px;
-    height: 100%;
-    animation: moveRight 1.8s linear infinite;
-    animation-delay: 0.45s;
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
 }
 
-.countdown-box .bottom-line {
-    bottom: 0;
-    right: 0;
-    height: 3px;
-    width: 100%;
-    animation: moveBottom 1.8s linear infinite;
-    animation-delay: 0.9s;
-}
-
-.countdown-box .left-line {
-    bottom: 0;
-    left: 0;
-    width: 3px;
-    height: 100%;
-    animation: moveLeft 1.8s linear infinite;
-    animation-delay: 1.35s;
-}
-
-@keyframes moveTop {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(100%); }
-}
-
-@keyframes moveRight {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(100%); }
-}
-
-@keyframes moveBottom {
-    from { transform: translateX(100%); }
-    to { transform: translateX(-100%); }
-}
-
-@keyframes moveLeft {
-    from { transform: translateY(100%); }
-    to { transform: translateY(-100%); }
+@keyframes neonBorderSpin {
+    from { --angle: 0deg; }
+    to { --angle: 360deg; }
 }
 
         .page-section {
@@ -1551,10 +1527,6 @@
                 <div class="countdown-title" id="countdownTitle">Get with the T.I.M.E.S.</div>
 
                 <div class="countdown-box" id="homeCountdownBox">
-                    <span class="border-line top-line"></span>
-                    <span class="border-line right-line"></span>
-                    <span class="border-line bottom-line"></span>
-                    <span class="border-line left-line"></span>
                 <div class="countdown" id="countdown"></div>
             </div>
             </div>
