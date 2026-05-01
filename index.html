@@ -441,69 +441,20 @@
     letter-spacing: 6px;
     margin: 0;
     font-family: "Inter", sans-serif;
-    animation: heroBreath 4s ease-in-out infinite, titleGradientShift 20s linear infinite;
+    animation: heroBreath 4s ease-in-out infinite;
     transform-origin: center;
-            position: relative;
-
-    background: linear-gradient(
-    120deg,
-    #ff1a1a 0%,
-    #ff2424 5%,
-    #ff2e2e 10%,
-    #ff3838 15%,
-    #ff4242 20%,
-    #ff1f1f 25%,
-    #e60000 30%,
-    #cc0000 35%,
-    #e00000 40%,
-    #ff2a2a 45%,
-    #ff4a4a 50%,
-    #ff6666 55%,
-    #ff3a3a 60%,
-    #ff1a1a 65%,
-    #cc0000 70%,
-    #990000 75%,
-    #cc0000 80%,
-    #ff2a2a 85%,
-    #ff4d4d 90%,
-    #ff2a2a 95%,
-    #ff0000 100%
-);
-background-size: 400% 400%;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
+    position: relative;
     text-shadow: none;
-    filter: 
-    drop-shadow(0 0 10px rgba(255, 40, 40, 0.4))
-    drop-shadow(0 0 25px rgba(255, 20, 20, 0.25))
-    drop-shadow(0 0 45px rgba(255, 0, 0, 0.15));
 }
 
-        .hero h1::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-
-    background-image:
-        radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 3px 3px;
-
-    mix-blend-mode: overlay;
-    opacity: 0.15;
-}
-
-        .times-logo {
+.times-logo {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 7px;
+    gap: 12px;
     font-family: "Inter", sans-serif;
     font-size: 76px;
-    font-weight: 800;
+    font-weight: 850;
     letter-spacing: 2px;
     transform-origin: center;
 }
@@ -511,32 +462,108 @@ background-size: 400% 400%;
 .times-logo span {
     display: inline-block;
     position: relative;
+    font-style: italic;
     transform: skewX(-8deg);
-    background: inherit;
-    background-size: inherit;
-    background-position: inherit;
+
+    background: linear-gradient(
+        120deg,
+        #ff0505 0%,
+        #ff1717 8%,
+        #ff3030 16%,
+        #ff4a4a 24%,
+        #ff2020 32%,
+        #e00000 40%,
+        #ff1515 48%,
+        #ff3b3b 56%,
+        #b80000 64%,
+        #ff2626 72%,
+        #ff5a5a 84%,
+        #ff1111 100%
+    );
+
+    background-size: 520% 520%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 14px rgba(255,70,70,0.16));
+
+    filter:
+        drop-shadow(0 0 10px rgba(255, 40, 40, 0.42))
+        drop-shadow(0 0 24px rgba(255, 20, 20, 0.24))
+        drop-shadow(0 0 42px rgba(255, 0, 0, 0.14));
+
+    animation: letterGradientShift 18s ease-in-out infinite;
 }
 
-.times-logo span:nth-child(1),
-.times-logo span:nth-child(5),
-.times-logo span:nth-child(9) {
+.times-logo span:nth-child(1) {
     transform: skewX(-8deg) scaleY(1.18);
+    animation-delay: 0s;
 }
 
-.times-logo span:nth-child(3),
+.times-logo span:nth-child(2) {
+    transform: translateY(10px) scale(0.55);
+    animation-delay: -1.6s;
+    opacity: 0.75;
+}
+
+.times-logo span:nth-child(3) {
+    transform: skewX(-8deg) scaleY(0.95);
+    animation-delay: -3.2s;
+}
+
+.times-logo span:nth-child(4) {
+    transform: translateY(10px) scale(0.55);
+    animation-delay: -4.8s;
+    opacity: 0.75;
+}
+
+.times-logo span:nth-child(5) {
+    transform: skewX(-8deg) scaleY(1.18);
+    animation-delay: -6.4s;
+}
+
+.times-logo span:nth-child(6) {
+    transform: translateY(10px) scale(0.55);
+    animation-delay: -8s;
+    opacity: 0.75;
+}
+
 .times-logo span:nth-child(7) {
     transform: skewX(-8deg) scaleY(0.95);
+    animation-delay: -9.6s;
 }
 
-.times-logo span:nth-child(even) {
-    font-size: 0.45em;
-    transform: translateY(10px);
+.times-logo span:nth-child(8) {
+    transform: translateY(10px) scale(0.55);
+    animation-delay: -11.2s;
     opacity: 0.75;
+}
+
+.times-logo span:nth-child(9) {
+    transform: skewX(-8deg) scaleY(1.18);
+    animation-delay: -12.8s;
+}
+
+@keyframes letterGradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    25% {
+        background-position: 65% 35%;
+    }
+
+    50% {
+        background-position: 100% 60%;
+    }
+
+    75% {
+        background-position: 35% 45%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
         @keyframes heroBreath {
