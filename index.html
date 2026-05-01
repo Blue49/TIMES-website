@@ -520,66 +520,123 @@
     padding: 30px 50px;
     border-radius: 16px;
     background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,80,80,0.22);
     backdrop-filter: blur(10px);
-    box-shadow: 0 0 0 rgba(255, 40, 40, 0);
-
+    box-shadow: 0 0 18px rgba(255, 40, 40, 0.08);
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    transition: 0.3s ease;
 }
 
 .countdown-box:hover {
     transform: translateY(-5px) scale(1.02);
     background: rgba(255,255,255,0.12);
-    border-color: rgba(255, 95, 95, 0.28);
+    border-color: rgba(255, 95, 95, 0.35);
     box-shadow:
-        0 0 20px rgba(255, 50, 50, 0.14),
-        0 0 36px rgba(255, 30, 30, 0.10);
+        0 0 18px rgba(255, 50, 50, 0.20),
+        0 0 38px rgba(255, 30, 30, 0.16);
 }
 
-.countdown-box::before {
-    content: "";
+/* bright moving neon streak */
+.countdown-box .border-line {
     position: absolute;
-    inset: -2px;
-    border-radius: 18px;
-    padding: 2px;
-
-    background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255, 70, 70, 0.9),
-        rgba(255, 255, 255, 0.9),
-        rgba(255, 70, 70, 0.9),
-        transparent
-    );
-
-    background-size: 300% 300%;
-
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
-    animation: borderFlow 4s linear infinite;
+    transition: opacity 0.25s ease;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 40, 40, 0.15) 15%,
+        rgba(255, 50, 50, 1) 42%,
+        rgba(255, 230, 230, 1) 50%,
+        rgba(255, 50, 50, 1) 58%,
+        rgba(255, 40, 40, 0.15) 85%,
+        transparent 100%
+    );
+    box-shadow:
+        0 0 8px rgba(255, 45, 45, 1),
+        0 0 18px rgba(255, 35, 35, 0.95),
+        0 0 36px rgba(255, 20, 20, 0.65),
+        0 0 60px rgba(255, 0, 0, 0.35);
 }
 
-.countdown-box:hover::before {
+.countdown-box:hover .border-line {
     opacity: 1;
 }
 
-@keyframes borderFlow {
-    0% {
-        background-position: 0% 50%;
-    }
+.countdown-box .top-line {
+    top: 0;
+    left: 0;
+    height: 4px;
+    width: 55%;
+    animation: moveTop 2.8s linear infinite;
+}
 
-    100% {
-        background-position: 300% 50%;
-    }
+.countdown-box .right-line {
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 55%;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 40, 40, 0.15) 15%,
+        rgba(255, 50, 50, 1) 42%,
+        rgba(255, 230, 230, 1) 50%,
+        rgba(255, 50, 50, 1) 58%,
+        rgba(255, 40, 40, 0.15) 85%,
+        transparent 100%
+    );
+    animation: moveRight 2.8s linear infinite;
+    animation-delay: 0.7s;
+}
+
+.countdown-box .bottom-line {
+    bottom: 0;
+    right: 0;
+    height: 4px;
+    width: 55%;
+    animation: moveBottom 2.8s linear infinite;
+    animation-delay: 1.4s;
+}
+
+.countdown-box .left-line {
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    height: 55%;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 40, 40, 0.15) 15%,
+        rgba(255, 50, 50, 1) 42%,
+        rgba(255, 230, 230, 1) 50%,
+        rgba(255, 50, 50, 1) 58%,
+        rgba(255, 40, 40, 0.15) 85%,
+        transparent 100%
+    );
+    animation: moveLeft 2.8s linear infinite;
+    animation-delay: 2.1s;
+}
+
+@keyframes moveTop {
+    from { transform: translateX(-115%); }
+    to { transform: translateX(220%); }
+}
+
+@keyframes moveRight {
+    from { transform: translateY(-115%); }
+    to { transform: translateY(220%); }
+}
+
+@keyframes moveBottom {
+    from { transform: translateX(115%); }
+    to { transform: translateX(-220%); }
+}
+
+@keyframes moveLeft {
+    from { transform: translateY(115%); }
+    to { transform: translateY(-220%); }
 }
 
 .countdown {
@@ -1516,11 +1573,14 @@
                     <span></span><span></span><span></span><span></span><span></span>
                 </div>
 
-                <div class="countdown-title" id="countdownTitle">Get with the T.I.M.E.S.</div>
-
                 <div class="countdown-box" id="homeCountdownBox">
-                <div class="countdown" id="countdown"></div>
-            </div>
+    <span class="border-line top-line"></span>
+    <span class="border-line right-line"></span>
+    <span class="border-line bottom-line"></span>
+    <span class="border-line left-line"></span>
+
+    <div class="countdown" id="countdown"></div>
+</div>
             </div>
         </section>
 
