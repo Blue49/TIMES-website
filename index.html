@@ -470,6 +470,49 @@
             filter: drop-shadow(0 0 14px rgba(255, 70, 70, 0.14));
         }
 
+        .times-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    font-family: "Inter", sans-serif;
+    font-size: 76px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    transform-origin: center;
+}
+
+.times-logo span {
+    display: inline-block;
+    position: relative;
+    transform: skewX(-8deg);
+    background: inherit;
+    background-size: inherit;
+    background-position: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 14px rgba(255,70,70,0.16));
+}
+
+.times-logo span:nth-child(1),
+.times-logo span:nth-child(5),
+.times-logo span:nth-child(9) {
+    transform: skewX(-8deg) scaleY(1.18);
+}
+
+.times-logo span:nth-child(3),
+.times-logo span:nth-child(7) {
+    transform: skewX(-8deg) scaleY(0.95);
+}
+
+.times-logo span:nth-child(even) {
+    font-size: 0.45em;
+    transform: translateY(10px);
+    opacity: 0.75;
+}
+
         @keyframes heroBreath {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.035); }
@@ -1576,7 +1619,9 @@
             <div class="hero-aura"></div>
 
             <div class="hero-inner" id="heroInner">
-                <h1>T.I.M.E.S</h1>
+                <h1 class="times-logo" aria-label="T.I.M.E.S">
+    <span>T</span><span>.</span><span>I</span><span>.</span><span>M</span><span>.</span><span>E</span><span>.</span><span>S</span>
+</h1>
                 <p><span class="hero-tagline">Are you ready to get with the T.I.M.E.S?</span></p>
 
                 <div class="audio-waveform" aria-hidden="true">
