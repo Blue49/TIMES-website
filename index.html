@@ -543,36 +543,35 @@
     content: "";
     position: absolute;
     inset: -3px;
-    padding: 3px;
     border-radius: inherit;
-    opacity: 0;
     pointer-events: none;
+    opacity: 0;
 
     background: conic-gradient(
         from var(--angle),
         transparent 0deg,
-        transparent 245deg,
-        rgba(255, 40, 40, 0.2) 285deg,
-        rgba(255, 45, 45, 1) 310deg,
-        rgba(255, 255, 255, 0.95) 325deg,
-        rgba(255, 45, 45, 1) 340deg,
+        transparent 250deg,
+        rgba(255, 30, 30, 0.3) 285deg,
+        rgba(255, 40, 40, 1) 310deg,
+        rgba(255, 100, 100, 1) 325deg,
+        rgba(255, 40, 40, 1) 340deg,
         transparent 360deg
     );
 
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
+    /* THIS removes the white outline issue */
+    mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
     mask-composite: exclude;
 
+    /* WAY stronger glow */
     filter:
-        drop-shadow(0 0 8px rgba(255, 45, 45, 0.95))
-        drop-shadow(0 0 18px rgba(255, 20, 20, 0.6));
+        drop-shadow(0 0 10px rgba(255, 40, 40, 1))
+        drop-shadow(0 0 20px rgba(255, 20, 20, 0.9))
+        drop-shadow(0 0 35px rgba(255, 0, 0, 0.7))
+        drop-shadow(0 0 60px rgba(255, 0, 0, 0.4));
 
-    transition: opacity 0.25s ease;
     animation: neonBorderSpin 1.6s linear infinite;
+    transition: opacity 0.25s ease;
 }
-
 .countdown-box:hover::before {
     opacity: 1;
     filter:
