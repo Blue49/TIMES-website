@@ -441,24 +441,35 @@
     letter-spacing: 6px;
     margin: 0;
     font-family: "Inter", sans-serif;
-    animation: heroBreath 4s ease-in-out infinite, titleGradientShift 14s linear infinite;
+    animation: heroBreath 4s ease-in-out infinite, titleGradientShift 20s linear infinite;
     transform-origin: center;
+            position: relative;
 
     background: linear-gradient(
     120deg,
     #ff1a1a 0%,
-    #ff3b3b 10%,
-    #ff0000 20%,
-    #ff4d4d 30%,
-    #cc0000 40%,
-    #ff2a2a 50%,
-    #ff6666 60%,
-    #990000 70%,
-    #ff1a1a 80%,
+    #ff2424 5%,
+    #ff2e2e 10%,
+    #ff3838 15%,
+    #ff4242 20%,
+    #ff1f1f 25%,
+    #e60000 30%,
+    #cc0000 35%,
+    #e00000 40%,
+    #ff2a2a 45%,
+    #ff4a4a 50%,
+    #ff6666 55%,
+    #ff3a3a 60%,
+    #ff1a1a 65%,
+    #cc0000 70%,
+    #990000 75%,
+    #cc0000 80%,
+    #ff2a2a 85%,
     #ff4d4d 90%,
+    #ff2a2a 95%,
     #ff0000 100%
 );
-background-size: 350% 350%;
+background-size: 400% 400%;
 
     -webkit-background-clip: text;
     background-clip: text;
@@ -469,6 +480,20 @@ background-size: 350% 350%;
     drop-shadow(0 0 10px rgba(255, 40, 40, 0.4))
     drop-shadow(0 0 25px rgba(255, 20, 20, 0.25))
     drop-shadow(0 0 45px rgba(255, 0, 0, 0.15));
+}
+
+        .hero h1::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 3px 3px;
+
+    mix-blend-mode: overlay;
+    opacity: 0.15;
 }
 
         .times-logo {
