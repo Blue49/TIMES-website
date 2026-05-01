@@ -2058,6 +2058,8 @@
     const bg1 = document.getElementById("bg1");
     const navbar = document.querySelector(".navbar");
 
+    let navClickLocked = false;
+
     function moveNavIndicatorTo(link) {
         if (!link) return;
         navIndicator.style.width = `${link.offsetWidth}px`;
@@ -2077,7 +2079,14 @@
     navLinks.forEach(link => {
         link.addEventListener("click", function() {
             const targetId = this.getAttribute("href").substring(1);
+
+            navClickLocked = true;
             setActiveLink(targetId);
+
+            setTimeout(() => {
+                navClickLocked = false;
+                handleScroll();
+            }, 700);
         });
     });
 
@@ -2128,7 +2137,9 @@
             }
         });
 
-        setActiveLink(currentSection);
+        if (!navClickLocked) {
+    setActiveLink(currentSection);
+}
         revealSections();
     }
 
