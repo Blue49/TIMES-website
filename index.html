@@ -567,17 +567,17 @@
 /* longer faded tail */
 .neon-border-tail {
     fill: none;
-    stroke: rgba(255, 35, 35, 0.28);
-    stroke-width: 1.8;
+    stroke: url(#neonTailGradient);
+    stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
 
-    stroke-dasharray: 420 580;
+    stroke-dasharray: 520 480;
     stroke-dashoffset: 0;
 
     filter:
-        drop-shadow(0 0 10px rgba(255, 45, 45, 0.45))
-        drop-shadow(0 0 26px rgba(255, 0, 0, 0.22));
+        drop-shadow(0 0 8px rgba(255, 45, 45, 0.65))
+        drop-shadow(0 0 22px rgba(255, 0, 0, 0.32));
 
     animation: neonTrace 4.2s linear infinite;
 }
@@ -585,21 +585,20 @@
 .neon-border-line {
     fill: none;
     stroke: rgba(255, 55, 55, 1);
-    stroke-width: 2;
+    stroke-width: 2.35;
     stroke-linecap: round;
     stroke-linejoin: round;
 
-    stroke-dasharray: 95 905;
-    stroke-dashoffset: -325;
+    stroke-dasharray: 70 930;
+    stroke-dashoffset: -450;
 
     filter:
-        drop-shadow(0 0 6px rgba(255, 60, 60, 1))
-        drop-shadow(0 0 18px rgba(255, 20, 20, 0.75))
-        drop-shadow(0 0 34px rgba(255, 0, 0, 0.35));
+        drop-shadow(0 0 7px rgba(255, 70, 70, 1))
+        drop-shadow(0 0 18px rgba(255, 25, 25, 0.85))
+        drop-shadow(0 0 38px rgba(255, 0, 0, 0.45));
 
     animation: neonTraceHead 4.2s linear infinite;
 }
-
 @keyframes neonTrace {
     from { stroke-dashoffset: 0; }
     to { stroke-dashoffset: -1000; }
@@ -1550,9 +1549,18 @@
 
                 <div class="countdown-box" id="homeCountdownBox">
     <svg class="neon-border" viewBox="0 0 100 32" preserveAspectRatio="none">
-        <rect class="neon-border-base" x="0.7" y="0.7" width="98.6" height="30.6" rx="2.8" ry="2.8" pathLength="1000" />
-        <rect class="neon-border-tail" x="0.7" y="0.7" width="98.6" height="30.6" rx="2.8" ry="2.8" pathLength="1000" />
-        <rect class="neon-border-line" x="0.7" y="0.7" width="98.6" height="30.6" rx="2.8" ry="2.8" pathLength="1000" />
+        <defs>
+            <linearGradient id="neonTailGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgb(255, 45, 45)" stop-opacity="0" />
+                <stop offset="35%" stop-color="rgb(255, 45, 45)" stop-opacity="0.18" />
+                <stop offset="65%" stop-color="rgb(255, 45, 45)" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="rgb(255, 55, 55)" stop-opacity="0.95" />
+            </linearGradient>
+        </defs>
+
+        <rect class="neon-border-base" x="0.7" y="0.7" width="98.6" height="30.6" rx="2.8" ry="2.8" pathLength="1000"></rect>
+        <rect class="neon-border-tail" x="0.7" y="0.7" width="98.6" height="30.6" rx="2.8" ry="2.8" pathLength="1000"></rect>
+        <rect class="neon-border-line" x="0.7" y="0.7" width="98.6" height="30.6" rx="2.8" ry="2.8" pathLength="1000"></rect>
     </svg>
 
     <div class="countdown" id="countdown"></div>
